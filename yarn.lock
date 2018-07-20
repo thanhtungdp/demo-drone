@@ -151,9 +151,9 @@
     joi "^13.4.0"
     micro latest
 
-"@bit/tungtung.micro.components.middleware-auth@^0.0.1":
-  version "0.0.1"
-  resolved "https://node.bitsrc.io/tungtung.micro.components.middleware-auth/-/tungtung.micro.components.middleware-auth-0.0.1.tgz#c7c3f1316c2e7dfd6c1da7e66ba57ba1c372fab3"
+"@bit/tungtung.micro.components.middleware-auth@^0.0.3":
+  version "0.0.2"
+  resolved "https://node.bitsrc.io/tungtung.micro.components.middleware-auth/-/tungtung.micro.components.middleware-auth-0.0.2.tgz#70ab4c0e176d868028a5404242d8a05253514029"
   dependencies:
     axios "^0.18.0"
 
