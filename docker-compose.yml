@@ -9,7 +9,7 @@ services:
         - NODE_ENV=development
     command: /bin/sh -c "yarn run dev"
     ports:
-      - 3004:3000
+      - 5009:3000
     environment:
       - MONGODB_URL=mongodb://mongo:27017/micro-db-test
     volumes:
@@ -27,8 +27,8 @@ services:
 
   mongo:
     image: mongo
-    volumes:
-      - /data/db:/data/db
+    # volumes:
+      # - /data/db:/data/db
 #
 #  traefik:
 #    image: traefik

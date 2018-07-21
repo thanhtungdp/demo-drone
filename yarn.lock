@@ -152,14 +152,17 @@
     micro latest
 
 "@bit/tungtung.micro.components.middleware-auth@^0.0.3":
-  version "0.0.2"
-  resolved "https://node.bitsrc.io/tungtung.micro.components.middleware-auth/-/tungtung.micro.components.middleware-auth-0.0.2.tgz#70ab4c0e176d868028a5404242d8a05253514029"
+  version "0.0.3"
+  resolved "https://node.bitsrc.io/tungtung.micro.components.middleware-auth/-/tungtung.micro.components.middleware-auth-0.0.3.tgz#c0f13239479a010f1b92c688ed2ed889251d4f46"
   dependencies:
+    "@bit/tungtung.micro.components.mongo" "0.0.3"
     axios "^0.18.0"
+    boom "^7.2.0"
+    micro latest
 
-"@bit/tungtung.micro.components.mongo@^0.0.1":
-  version "0.0.1"
-  resolved "https://node.bitsrc.io/tungtung.micro.components.mongo/-/tungtung.micro.components.mongo-0.0.1.tgz#d95947fd25c2c33b682f7b438b22171e08a5f024"
+"@bit/tungtung.micro.components.mongo@0.0.3", "@bit/tungtung.micro.components.mongo@^0.0.3":
+  version "0.0.3"
+  resolved "https://node.bitsrc.io/tungtung.micro.components.mongo/-/tungtung.micro.components.mongo-0.0.3.tgz#4068f747851358ef7009366b2f52f45d73d5136a"
   dependencies:
     chalk "^2.4.1"
     mongoose "^5.1.7"

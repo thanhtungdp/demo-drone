@@ -9,6 +9,7 @@ ENV NODE_ENV $NODE_ENV
 # install dependencies first, in a different location for easier app bind mounting for local development
 WORKDIR /opt
 COPY package.json package-lock.json* yarn.lock ./
+RUN yarn config set '@bit:registry' https://node.bitsrc.io
 RUN yarn install
 ENV PATH /opt/node_modules/.bin:$PATH
 
