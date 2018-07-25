@@ -10,11 +10,6 @@
     "lint": "standard --fix",
     "fixcode": "yarn run lint && yarn run overwrite"
   },
-  "husky": {
-    "hooks": {
-      "pre-commit": "npm run fixcode && npm run test"
-    }
-  },
   "env": {
     "NODE_ENV": "production"
   },
