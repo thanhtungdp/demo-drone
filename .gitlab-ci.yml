@@ -15,6 +15,7 @@ test:
   before_script:
     - apk add --update bash
     - apk add --update git && rm -rf /tmp/* /var/cache/apk/*
+    - yarn config set '@bit:registry' https://node.bitsrc.io
     - yarn install
   script:
     - npm run lint
