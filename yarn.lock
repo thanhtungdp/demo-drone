@@ -120,6 +120,12 @@
   dependencies:
     amqplib "^0.5.2"
 
+"@bit/tungtung.micro.components.create-query@^0.0.1":
+  version "0.0.1"
+  resolved "https://node.bitsrc.io/tungtung.micro.components.create-query/-/tungtung.micro.components.create-query-0.0.1.tgz#d95fb21f22f74900d91bd71081d4fabb8558eedc"
+  dependencies:
+    mongoose "^5.1.7"
+
 "@bit/tungtung.micro.components.logger@0.0.1", "@bit/tungtung.micro.components.logger@^0.0.1":
   version "0.0.1"
   resolved "https://node.bitsrc.io/tungtung.micro.components.logger/-/tungtung.micro.components.logger-0.0.1.tgz#eeee766151916c83a34b0743721db552eb2f977b"
@@ -159,6 +165,13 @@
     axios "^0.18.0"
     boom "^7.2.0"
     micro latest
+
+"@bit/tungtung.micro.components.mongo-slug@^0.0.1":
+  version "0.0.1"
+  resolved "https://node.bitsrc.io/tungtung.micro.components.mongo-slug/-/tungtung.micro.components.mongo-slug-0.0.1.tgz#be3e9ea76d5ff27301973493419dcb355dcdac3e"
+  dependencies:
+    mongoose "^5.1.7"
+    slug "^0.9.1"
 
 "@bit/tungtung.micro.components.mongo@0.0.3", "@bit/tungtung.micro.components.mongo@^0.0.3":
   version "0.0.3"
@@ -4519,6 +4532,12 @@ slide@^1.1.5:
   version "1.1.6"
   resolved "https://registry.yarnpkg.com/slide/-/slide-1.1.6.tgz#56eb027d65b4d2dce6cb2e2d32c4d4afc9e1d707"
 
+slug@^0.9.1:
+  version "0.9.1"
+  resolved "https://registry.yarnpkg.com/slug/-/slug-0.9.1.tgz#af08f608a7c11516b61778aa800dce84c518cfda"
+  dependencies:
+    unicode ">= 0.3.1"
+
 snapdragon-node@^2.0.1:
   version "2.1.1"
   resolved "https://registry.yarnpkg.com/snapdragon-node/-/snapdragon-node-2.1.1.tgz#6c175f86ff14bdb0724563e8f3c1b021a286853b"
@@ -4955,6 +4974,10 @@ typescript@^2.5.1:
 uid2@0.0.3:
   version "0.0.3"
   resolved "https://registry.yarnpkg.com/uid2/-/uid2-0.0.3.tgz#483126e11774df2f71b8b639dcd799c376162b82"
+
+"unicode@>= 0.3.1":
+  version "11.0.1"
+  resolved "https://registry.yarnpkg.com/unicode/-/unicode-11.0.1.tgz#735bd422ec75cf28d396eb224d535d168d5f1db6"
 
 union-value@^1.0.0:
   version "1.0.0"
