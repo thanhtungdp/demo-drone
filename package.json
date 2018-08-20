@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "main": "src/index.js",
   "scripts": {
-    "dev": "NODE_PATH=./src micro-dev src/boot.js --ignore .idea --ignore logs",
+    "dev": "NODE_PATH=./src micro-dev src/boot.js --watch src",
     "start": "NODE_ENV=production NODE_PATH=./src micro",
     "test": "NODE_PATH=./src ava",
     "overwrite": "prettier-standard src/**/*.js",
