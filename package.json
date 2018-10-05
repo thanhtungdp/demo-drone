@@ -1,5 +1,5 @@
 {
-  "name": "clean-service",
+  "name": "quizlist-service",
   "version": "0.0.0",
   "main": "src/index.js",
   "scripts": {
@@ -20,13 +20,13 @@
     "@bit/tungtung.micro.components.micro-boom": "^0.0.1",
     "@bit/tungtung.micro.components.micro-crud": "^0.0.1",
     "@bit/tungtung.micro.components.micro-joi": "^0.0.1",
-    "@bit/tungtung.micro.components.middleware-auth": "^0.0.3",
     "@bit/tungtung.micro.components.middleware-auth-community": "^1.0.0",
     "@bit/tungtung.micro.components.mongo": "^0.0.3",
     "@bit/tungtung.micro.components.mongo-slug": "^0.0.1",
     "ava": "^0.25.0",
     "boom": "^7.2.0",
     "chalk": "^2.4.1",
+    "axios": "^0.18.0",
     "dotenv": "^6.0.0",
     "faker": "^4.1.0",
     "husky": "^1.0.0-rc.13",

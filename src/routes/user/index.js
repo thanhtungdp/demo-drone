@@ -1,8 +1,8 @@
 const AccessLog = require('models/AccessLog')
 const QuizList = require('models/QuizList')
-const { getQueryFromKey } = require('components/create-query')
+const { getQueryFromKey } = require('components/create-query-community')
 const userAgent = require('useragent')
-const quizlistService = require('components/quizlist-service')
+const quizlistService = require('components/quizlist-service-community')
 
 module.exports = {
   createAccessLog: async req => {

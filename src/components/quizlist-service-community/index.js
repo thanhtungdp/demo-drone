@@ -33,10 +33,26 @@ async function updateAccessCount (service, req, quizListKey) {
   }
 }
 
+async function getAccessLog (service, req, accessLogId) {
+  try {
+    const dataRes = await axios.get(service + '/access-log/' + accessLogId, {
+      headers: {
+        common: {
+          ...req.headers
+        }
+      }
+    })
+    return dataRes.data
+  } catch (e) {
+    throw e
+  }
+}
+
 module.exports = (service = process.env.QUIZLIST_SERVICE) => {
   return {
     findQuizList: (req, quizListKey) => findQuizList(service, req, quizListKey),
     updateAccessCount: (req, quizListKey) =>
-      updateAccessCount(service, req, quizListKey)
+      updateAccessCount(service, req, quizListKey),
+    getAccessLog: (req, accessLogId) => getAccessLog(service, req, accessLogId)
   }
 }

@@ -26,6 +26,7 @@ module.exports = routerConbine(
     get('/:quizListKey', composeMiddle(playerRoute.getQuizlistDetail))
   ),
   get('/health', () => 'Working...'),
+  get('/access-log/:accessLogId', composeMiddle(internalRoute.getAccessLog)),
   get(
     '/:quizListKey/access-count',
     composeMiddle(internalRoute.updateAccessCount)
