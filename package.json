@@ -21,6 +21,7 @@
     "@bit/tungtung.micro.components.micro-crud": "^0.0.1",
     "@bit/tungtung.micro.components.micro-joi": "^0.0.1",
     "@bit/tungtung.micro.components.middleware-auth": "^0.0.3",
+    "@bit/tungtung.micro.components.middleware-auth-community": "^1.0.0",
     "@bit/tungtung.micro.components.mongo": "^0.0.3",
     "@bit/tungtung.micro.components.mongo-slug": "^0.0.1",
     "ava": "^0.25.0",
@@ -41,7 +42,8 @@
     "request-promise": "^4.2.2",
     "standard": "^11.0.1",
     "test-listen": "1.0.2",
-    "url": "^0.11.0"
+    "url": "^0.11.0",
+    "useragent": "^2.3.0"
   },
   "license": "MIT"
 }

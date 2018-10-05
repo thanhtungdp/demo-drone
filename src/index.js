@@ -1,20 +1,35 @@
-const { router, get, withNamespace } = require('microrouter')
+const { router, get, post, withNamespace } = require('microrouter')
 const { handleErrors } = require('@bit/tungtung.micro.components.micro-boom')
-const playerRouter = require('./routes/player')
+const createMiddlewareAuth = require('@bit/tungtung.micro.components.middleware-auth-community')
 const cors = require('micro-cors')({ origin: '*' })
 const config = require('config')
-// const faker = require('faker')
+const { connect } = require('@bit/tungtung.micro.components.mongo')
+connect(config.mongodbUrl)
 
-const namespace = withNamespace(`/${config.serviceName}`)
+const playerRoute = require('routes/user')
+const adminRoute = require('routes/admin')
+const internalRoute = require('routes/internal')
+
+const adminNamespace = withNamespace(`/${config.serviceName}/admin`)
+const userNamespace = withNamespace(`/${config.serviceName}/user`)
+
+const authMiddleware = createMiddlewareAuth()
+
+const composeMiddle = func => handleErrors(authMiddleware(func))
 
 const routerConbine = (...args) => cors(router(...args))
 
 module.exports = routerConbine(
-  namespace(
-    get('/:quizListKey', handleErrors(playerRouter.getQuizlistDetail)),
-    get('/test', handleErrors(() => 'Welcome clean service')),
-    get('/*', () => config.serviceName)
+  adminNamespace(post('/', composeMiddle(adminRoute.create))),
+  userNamespace(
+    get('/:quizListKey/access-log', composeMiddle(playerRoute.createAccessLog)),
+    get('/:quizListKey', composeMiddle(playerRoute.getQuizlistDetail))
   ),
   get('/health', () => 'Working...'),
+  get(
+    '/:quizListKey/access-count',
+    composeMiddle(internalRoute.updateAccessCount)
+  ),
+  get('/:quizListKey', composeMiddle(internalRoute.getQuizListItem)),
   get('/*', () => config.serviceName)
 )
