@@ -1,9 +1,6 @@
 const QuizList = require('models/QuizList')
 const AccessLog = require('models/AccessLog')
-const {
-  getQueryFromKey,
-  getQueryQuizlistFromKey
-} = require('components/create-query-community')
+const { getQueryFromKey } = require('components/create-query-community')
 
 module.exports = {
   getQuizListItem: async req => {
@@ -43,7 +40,7 @@ module.exports = {
     }
   },
   getAccessLog: async req => {
-    const query = getQueryQuizlistFromKey(req.params.contestKey)
+    const query = getQueryFromKey(req.params.accessLogId)
     const accessLog = await AccessLog.findOne(query)
     return accessLog
   }

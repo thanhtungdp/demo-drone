@@ -23,6 +23,8 @@ module.exports = routerConbine(
   adminNamespace(post('/', composeMiddle(adminRoute.create))),
   userNamespace(
     get('/:quizListKey/access-log', composeMiddle(playerRoute.createAccessLog)),
+    get('/:quizListKey/info', composeMiddle(playerRoute.getQuizlistInfo)),
+    get('/:quizListKey/play', composeMiddle(playerRoute.getQuizlistPlay)),
     get('/:quizListKey', composeMiddle(playerRoute.getQuizlistDetail))
   ),
   get('/health', () => 'Working...'),

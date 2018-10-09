@@ -33,5 +33,17 @@ module.exports = {
     const query = getQueryFromKey(req.params.quizListKey)
     const quizlist = await QuizList.findOne(query)
     return quizlist
+  },
+  getQuizlistInfo: async req => {
+    const query = getQueryFromKey(req.params.quizListKey)
+    const quizlist = await QuizList.findOne(query).select({ quizzes: 0 })
+    return quizlist
+  },
+  getQuizlistPlay: async req => {
+    const query = getQueryFromKey(req.params.quizListKey)
+    const quizlist = await QuizList.findOne(query).select({
+      'quizzes.correctAnswer': 0
+    })
+    return quizlist
   }
 }
