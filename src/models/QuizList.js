@@ -65,7 +65,16 @@ module.exports = createModel(
       return quizlist.save()
     },
     list: function (query = {}) {
-      return this.findOne(query)
+      return this.find(query)
+    },
+    savedUserSubmit: function (query = {}, player) {
+      return this.findOneAndUpdate(
+        query,
+        {
+          $push: { usersPlayed: player }
+        },
+        { new: true }
+      )
     }
   }
 )

@@ -9,7 +9,8 @@ module.exports = {
       title: Joi.string().required(),
       time: Joi.number().required(),
       description: Joi.string().required(),
-      quizzes: Joi.array().required()
+      quizzes: Joi.array().required(),
+      price: Joi.number()
     })
   )(async req => {
     const body = await json(req)

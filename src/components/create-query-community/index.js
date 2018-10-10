@@ -10,18 +10,18 @@ function getQueryFromKey (key) {
     : {}
 }
 
-function getQueryQuizlistFromKey (key) {
+function getQueryQuizListFromKey (key) {
   return key
     ? isObjectId(key)
-      ? { $or: [{ 'quizlist._id': key }, { 'quizlist.slug': key }] }
-      : { 'quizlist.slug': key }
+      ? { $or: [{ 'quizList._id': key }, { 'quizList.slug': key }] }
+      : { 'quizList.slug': key }
     : {}
 }
 
 module.exports.getQueryFromKey = getQueryFromKey
-module.exports.getQueryQuizlistFromKey = getQueryQuizlistFromKey
+module.exports.getQueryQuizListFromKey = getQueryQuizListFromKey
 
 module.exports = {
   getQueryFromKey,
-  getQueryQuizlistFromKey
+  getQueryQuizListFromKey
 }

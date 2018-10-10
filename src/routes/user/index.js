@@ -15,7 +15,7 @@ module.exports = {
     var browser = req.headers['user-agent']
     var user = req.user
     var ua = userAgent.is(browser)
-    const quizlist = await quizlistService().updateAccessCount(req, quizListKey)
+    const quizList = await quizlistService().updateAccessCount(req, quizListKey)
     ua.android =
       browser.indexOf('Dalvik') !== -1 || browser.indexOf('Android') !== -1
     ua.iOS = browser.indexOf('iPhone') !== -1
@@ -23,7 +23,7 @@ module.exports = {
       ip,
       browser,
       data: ua,
-      quizlist
+      quizList
     }
     const asscessLog = await AccessLog.create(data, user)
     return asscessLog
@@ -31,19 +31,19 @@ module.exports = {
 
   getQuizlistDetail: async req => {
     const query = getQueryFromKey(req.params.quizListKey)
-    const quizlist = await QuizList.findOne(query)
-    return quizlist
+    const quizList = await QuizList.findOne(query)
+    return quizList
   },
-  getQuizlistInfo: async req => {
+  getQuizlistOnlyView: async req => {
     const query = getQueryFromKey(req.params.quizListKey)
-    const quizlist = await QuizList.findOne(query).select({ quizzes: 0 })
-    return quizlist
+    const quizList = await QuizList.findOne(query).select({ quizzes: 0 })
+    return quizList
   },
   getQuizlistPlay: async req => {
     const query = getQueryFromKey(req.params.quizListKey)
-    const quizlist = await QuizList.findOne(query).select({
+    const quizList = await QuizList.findOne(query).select({
       'quizzes.correctAnswer': 0
     })
-    return quizlist
+    return quizList
   }
 }

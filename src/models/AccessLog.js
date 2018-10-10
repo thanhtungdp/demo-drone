@@ -3,7 +3,7 @@ const createModel = require('@bit/tungtung.micro.components.mongo/createModel')
 
 const AccessLogSchema = new Schema({
   owner: {},
-  quizlist: {},
+  quizList: {},
   ip: String,
   browser: String,
   data: {

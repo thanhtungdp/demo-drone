@@ -47,12 +47,28 @@ async function getAccessLog (service, req, accessLogId) {
     throw e
   }
 }
+async function updatePlayerSubmited (service, req, quizListKey) {
+  try {
+    const dataRes = await axios.get(service + '/' + quizListKey + '/submited', {
+      headers: {
+        common: {
+          ...req.headers
+        }
+      }
+    })
+    return dataRes.data
+  } catch (e) {
+    throw e
+  }
+}
 
 module.exports = (service = process.env.QUIZLIST_SERVICE) => {
   return {
     findQuizList: (req, quizListKey) => findQuizList(service, req, quizListKey),
     updateAccessCount: (req, quizListKey) =>
       updateAccessCount(service, req, quizListKey),
-    getAccessLog: (req, accessLogId) => getAccessLog(service, req, accessLogId)
+    getAccessLog: (req, accessLogId) => getAccessLog(service, req, accessLogId),
+    updatePlayerSubmited: (req, quizListKey) =>
+      updatePlayerSubmited(service, req, quizListKey)
   }
 }

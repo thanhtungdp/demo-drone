@@ -23,7 +23,10 @@ module.exports = routerConbine(
   adminNamespace(post('/', composeMiddle(adminRoute.create))),
   userNamespace(
     get('/:quizListKey/access-log', composeMiddle(playerRoute.createAccessLog)),
-    get('/:quizListKey/info', composeMiddle(playerRoute.getQuizlistInfo)),
+    get(
+      '/:quizListKey/only-view',
+      composeMiddle(playerRoute.getQuizlistOnlyView)
+    ),
     get('/:quizListKey/play', composeMiddle(playerRoute.getQuizlistPlay)),
     get('/:quizListKey', composeMiddle(playerRoute.getQuizlistDetail))
   ),
@@ -32,6 +35,10 @@ module.exports = routerConbine(
   get(
     '/:quizListKey/access-count',
     composeMiddle(internalRoute.updateAccessCount)
+  ),
+  get(
+    '/:quizListKey/submited',
+    composeMiddle(internalRoute.updatePlayerSubmited)
   ),
   get('/:quizListKey', composeMiddle(internalRoute.getQuizListItem)),
   get('/*', () => config.serviceName)
