@@ -48,6 +48,12 @@ QuizListSchema.methods.updateAccessCount = function () {
   this.accessCount = this.accessCount + 1
   return this.save()
 }
+QuizListSchema.methods.updateRating = function (data = {}) {
+  this.ratingAvg =
+    (this.totalRatings * this.ratingAvg + data.rating) / (this.totalRatings + 1)
+  this.totalRatings = this.totalRatings + 1
+  return this.save()
+}
 
 module.exports = createModel(
   {

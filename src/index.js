@@ -1,4 +1,4 @@
-const { router, get, post, withNamespace } = require('microrouter')
+const { router, get, post, put, withNamespace } = require('microrouter')
 const { handleErrors } = require('@bit/tungtung.micro.components.micro-boom')
 const createMiddlewareAuth = require('@bit/tungtung.micro.components.middleware-auth-community')
 const cors = require('micro-cors')({ origin: '*' })
@@ -41,5 +41,6 @@ module.exports = routerConbine(
     composeMiddle(internalRoute.updatePlayerSubmited)
   ),
   get('/:quizListKey', composeMiddle(internalRoute.getQuizListItem)),
+  put('/:quizListKey/rating', composeMiddle(internalRoute.updateRating)),
   get('/*', () => config.serviceName)
 )

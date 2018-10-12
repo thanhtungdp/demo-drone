@@ -61,6 +61,24 @@ async function updatePlayerSubmited (service, req, quizListKey) {
     throw e
   }
 }
+async function updateRating (service, req, quizListKey, data) {
+  try {
+    const dataRes = await axios.put(
+      service + '/' + quizListKey + '/rating',
+      data,
+      {
+        headers: {
+          common: {
+            ...req.headers
+          }
+        }
+      }
+    )
+    return dataRes.data
+  } catch (e) {
+    throw e
+  }
+}
 
 module.exports = (service = process.env.QUIZLIST_SERVICE) => {
   return {
@@ -69,6 +87,8 @@ module.exports = (service = process.env.QUIZLIST_SERVICE) => {
       updateAccessCount(service, req, quizListKey),
     getAccessLog: (req, accessLogId) => getAccessLog(service, req, accessLogId),
     updatePlayerSubmited: (req, quizListKey) =>
-      updatePlayerSubmited(service, req, quizListKey)
+      updatePlayerSubmited(service, req, quizListKey),
+    updateRating: (req, quizListKey, data) =>
+      updateRating(service, req, quizListKey, data)
   }
 }

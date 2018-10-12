@@ -1,5 +1,6 @@
 const QuizList = require('models/QuizList')
 const AccessLog = require('models/AccessLog')
+const { json } = require('micro')
 const { getQueryFromKey } = require('components/create-query-community')
 
 module.exports = {
@@ -53,5 +54,12 @@ module.exports = {
     }
     const quizList = await QuizList.savedUserSubmit(query, req.user)
     return quizList
+  },
+  updateRating: async req => {
+    let body = await json(req)
+    const query = getQueryFromKey(req.params.quizListKey)
+    let quizList = await QuizList.findOne(query)
+    let rating = await quizList.updateRating((data = { rating: body.rating }))
+    return rating
   }
 }
