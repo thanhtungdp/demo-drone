@@ -3,6 +3,7 @@ const QuizList = require('models/QuizList')
 const { getQueryFromKey } = require('components/create-query-community')
 const userAgent = require('useragent')
 const quizlistService = require('components/quizlist-service-community')
+const pagination = require('@bit/tungtung.micro.components.micro-crud/micro-crud/pagination')
 
 module.exports = {
   createAccessLog: async req => {
@@ -45,5 +46,10 @@ module.exports = {
       'quizzes.correctAnswer': 0
     })
     return quizList
-  }
+  },
+  getQuizLists: pagination(async req => {
+    let query = {}
+    let quizLists = await QuizList.paginate(query, req.pagination)
+    return quizLists
+  })
 }

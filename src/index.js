@@ -28,7 +28,8 @@ module.exports = routerConbine(
       composeMiddle(playerRoute.getQuizlistOnlyView)
     ),
     get('/:quizListKey/play', composeMiddle(playerRoute.getQuizlistPlay)),
-    get('/:quizListKey', composeMiddle(playerRoute.getQuizlistDetail))
+    get('/:quizListKey', composeMiddle(playerRoute.getQuizlistDetail)),
+    get('/', composeMiddle(playerRoute.getQuizLists))
   ),
   get('/health', () => 'Working...'),
   get('/access-log/:accessLogId', composeMiddle(internalRoute.getAccessLog)),
