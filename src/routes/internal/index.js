@@ -59,7 +59,10 @@ module.exports = {
     let body = await json(req)
     const query = getQueryFromKey(req.params.quizListKey)
     let quizList = await QuizList.findOne(query)
-    let rating = await quizList.updateRating((data = { rating: body.rating }))
+    let data = {
+      rating: body.rating
+    }
+    let rating = await quizList.updateRating(data)
     return rating
   }
 }
