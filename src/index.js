@@ -20,7 +20,10 @@ const composeMiddle = func => handleErrors(authMiddleware(func))
 const routerConbine = (...args) => cors(router(...args))
 
 module.exports = routerConbine(
-  adminNamespace(post('/', composeMiddle(adminRoute.create))),
+  adminNamespace(
+    post('/', composeMiddle(adminRoute.create)),
+    get('/update/:testKey', composeMiddle(adminRoute.getTestForUpdate))
+  ),
   userNamespace(
     get('/:quizListKey/access-log', composeMiddle(playerRoute.createAccessLog)),
     get(

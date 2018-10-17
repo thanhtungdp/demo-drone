@@ -11,6 +11,15 @@ const QuizListSchema = new Schema({
     default: 0
   },
   description: String,
+  tags: [],
+  mode: {}, // public or private
+  rankType: {}, // auto or custom
+  customRank: [],
+  type: {}, // online or offline test
+  openingTime: Date,
+  closingTime: Date,
+  showResultTime: Date,
+  password: String, // password access test
   status: String,
   pdfFile: String,
   totalQuestions: Number,
@@ -69,6 +78,20 @@ module.exports = createModel(
         owner: owner
       })
       return quizlist.save()
+    },
+    update: function (query = {}, data, owner) {
+      return this.findOneAndUpdate(
+        query,
+        {
+          $set: {
+            ...data,
+            slug: slug(data.title, true),
+            searchField: slug(data.title, false, ' ').toLowerCase(),
+            owner: owner
+          }
+        },
+        { new: true }
+      )
     },
     list: function (query = {}) {
       return this.find(query)
