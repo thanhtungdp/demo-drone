@@ -21,13 +21,19 @@ module.exports = {
       closingTime: Joi.date(),
       showResultTime: Joi.date(),
       password: Joi.string(),
-      price: Joi.number()
+      price: Joi.object().keys({
+        value: Joi.number(),
+        label: Joi.string()
+      })
     })
   )(async req => {
     const body = await json(req)
     const data = {
       ...body,
       totalQuestions: body.quizzes.length
+    }
+    if (typeof body.price === 'object') {
+      data.isFree = parseInt(body.price.value) === 0
     }
     let quizList
     if (body._id) {
@@ -59,7 +65,8 @@ module.exports = {
       openingTime: 1,
       closingTime: 1,
       showResultTime: 1,
-      password: 1
+      password: 1,
+      price: 1
     })
     return test
   }
