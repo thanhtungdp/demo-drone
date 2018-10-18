@@ -22,29 +22,23 @@ const routerConbine = (...args) => cors(router(...args))
 module.exports = routerConbine(
   adminNamespace(
     post('/', composeMiddle(adminRoute.create)),
+    get('/created', composeMiddle(adminRoute.getTestListByCreated)),
     get('/update/:testKey', composeMiddle(adminRoute.getTestForUpdate))
   ),
   userNamespace(
-    get('/:quizListKey/access-log', composeMiddle(playerRoute.createAccessLog)),
-    get(
-      '/:quizListKey/only-view',
-      composeMiddle(playerRoute.getQuizlistOnlyView)
-    ),
-    get('/:quizListKey/play', composeMiddle(playerRoute.getQuizlistPlay)),
-    get('/:quizListKey', composeMiddle(playerRoute.getQuizlistDetail)),
-    get('/', composeMiddle(playerRoute.getQuizLists))
+    get('/played', composeMiddle(playerRoute.getTestListtByPlayed)),
+    get('/playing', composeMiddle(playerRoute.getTestListByPlaying)),
+    get('/:testKey/access-log', composeMiddle(playerRoute.createAccessLog)),
+    get('/:testKey/only-view', composeMiddle(playerRoute.getTestOnlyView)),
+    get('/:testKey/play', composeMiddle(playerRoute.getTestPlay)),
+    get('/:testKey', composeMiddle(playerRoute.getTestDetail)),
+    get('/', composeMiddle(playerRoute.getTestList))
   ),
   get('/health', () => 'Working...'),
   get('/access-log/:accessLogId', composeMiddle(internalRoute.getAccessLog)),
-  get(
-    '/:quizListKey/access-count',
-    composeMiddle(internalRoute.updateAccessCount)
-  ),
-  get(
-    '/:quizListKey/submited',
-    composeMiddle(internalRoute.updatePlayerSubmited)
-  ),
-  get('/:quizListKey', composeMiddle(internalRoute.getQuizListItem)),
-  put('/:quizListKey/rating', composeMiddle(internalRoute.updateRating)),
+  get('/:testKey/access-count', composeMiddle(internalRoute.updateAccessCount)),
+  get('/:testKey/submited', composeMiddle(internalRoute.updatePlayerSubmited)),
+  get('/:testKey', composeMiddle(internalRoute.getTestItem)),
+  put('/:testKey/rating', composeMiddle(internalRoute.updateRating)),
   get('/*', () => config.serviceName)
 )

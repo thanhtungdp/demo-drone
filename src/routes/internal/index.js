@@ -4,13 +4,13 @@ const { json } = require('micro')
 const { getQueryFromKey } = require('components/create-query-community')
 
 module.exports = {
-  getQuizListItem: async req => {
-    const query = getQueryFromKey(req.params.quizListKey)
+  getTestItem: async req => {
+    const query = getQueryFromKey(req.params.testKey)
     const quizList = await QuizList.findOne(query)
     return quizList
   },
-  getQuizListInfo: async req => {
-    const query = getQueryFromKey(req.params.quizListKey)
+  getTestInfo: async req => {
+    const query = getQueryFromKey(req.params.testKey)
     const quizList = await QuizList.findOne(query).select({
       id: 1,
       _id: 1,
@@ -25,7 +25,7 @@ module.exports = {
     return quizList
   },
   updateAccessCount: async req => {
-    const query = getQueryFromKey(req.params.quizListKey)
+    const query = getQueryFromKey(req.params.testKey)
     const quizList = await QuizList.findOne(query)
     quizList.updateAccessCount()
     return {
@@ -48,7 +48,7 @@ module.exports = {
   updatePlayerSubmited: async req => {
     const query = {
       $and: [
-        getQueryFromKey(req.params.quizListKey),
+        getQueryFromKey(req.params.testKey),
         { 'usersPlayed._id': { $nin: [req.user._id] } }
       ]
     }
@@ -57,7 +57,7 @@ module.exports = {
   },
   updateRating: async req => {
     let body = await json(req)
-    const query = getQueryFromKey(req.params.quizListKey)
+    const query = getQueryFromKey(req.params.testKey)
     let quizList = await QuizList.findOne(query)
     let data = {
       rating: body.rating

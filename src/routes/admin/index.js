@@ -3,6 +3,7 @@ const QuizList = require('models/QuizList')
 const { json } = require('micro')
 const validation = require('@bit/tungtung.micro.components.micro-joi')
 const { getQueryFromKey } = require('components/create-query-community')
+const pagination = require('@bit/tungtung.micro.components.micro-crud/micro-crud/pagination')
 
 module.exports = {
   create: validation(
@@ -39,11 +40,7 @@ module.exports = {
     if (body._id) {
       const { _id } = data
       delete data._id
-      quizList = await QuizList.update(
-        { _id },
-        data,
-        req.user
-      )
+      quizList = await QuizList.update({ _id }, data, req.user)
     } else {
       quizList = await QuizList.create(data, req.user)
     }
@@ -69,5 +66,13 @@ module.exports = {
       price: 1
     })
     return test
-  }
+  },
+  getTestListByCreated: pagination(async req => {
+    const query = { 'owner._id': req.user._id }
+    const options = {
+      sort: { createdAt: -1 }
+    }
+    let testList = await QuizList.paginate(query, options, req.pagination)
+    return testList
+  })
 }

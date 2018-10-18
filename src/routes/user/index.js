@@ -12,11 +12,11 @@ module.exports = {
       req.connection.remoteAddress ||
       req.socket.remoteAddress ||
       req.connection.socket.remoteAddress
-    var { quizListKey } = req.params
+    var { testKey } = req.params
     var browser = req.headers['user-agent']
     var user = req.user
     var ua = userAgent.is(browser)
-    const quizList = await quizlistService().updateAccessCount(req, quizListKey)
+    const quizList = await quizlistService().updateAccessCount(req, testKey)
     ua.android =
       browser.indexOf('Dalvik') !== -1 || browser.indexOf('Android') !== -1
     ua.iOS = browser.indexOf('iPhone') !== -1
@@ -30,26 +30,59 @@ module.exports = {
     return asscessLog
   },
 
-  getQuizlistDetail: async req => {
-    const query = getQueryFromKey(req.params.quizListKey)
+  getTestDetail: async req => {
+    const query = getQueryFromKey(req.params.testKey)
     const quizList = await QuizList.findOne(query)
     return quizList
   },
-  getQuizlistOnlyView: async req => {
-    const query = getQueryFromKey(req.params.quizListKey)
+  getTestOnlyView: async req => {
+    const query = getQueryFromKey(req.params.testKey)
     const quizList = await QuizList.findOne(query).select({ quizzes: 0 })
     return quizList
   },
-  getQuizlistPlay: async req => {
-    const query = getQueryFromKey(req.params.quizListKey)
+  getTestPlay: async req => {
+    const query = getQueryFromKey(req.params.testKey)
     const quizList = await QuizList.findOne(query).select({
       'quizzes.correctAnswer': 0
     })
     return quizList
   },
-  getQuizLists: pagination(async req => {
-    let query = {}
-    let quizLists = await QuizList.paginate(query, req.pagination)
+  getTestList: pagination(async req => {
+    const query = { totalQuestions: { $gt: 0 } }
+    const options = {
+      sort: { createdAt: -1 }
+    }
+    let quizLists = await QuizList.paginate(query, options, req.pagination)
     return quizLists
+  }),
+  getTestListtByPlayed: pagination(async req => {
+    const query = {
+      'usersPlayed._id': req.user._id,
+      totalQuestions: { $gt: 0 }
+    }
+    const options = {
+      sort: { createdAt: -1 }
+    }
+    let testList = await QuizList.paginate(query, options, req.pagination)
+    return testList
+  }),
+  getTestListByPlaying: pagination(async req => {
+    let testId = await AccessLog.distinct('quizList._id', {
+      'owner._id': req.user._id
+    })
+    const options = {
+      sort: { createdAt: -1 }
+    }
+    let query = {
+      $and: [
+        {
+          'usersPlayed._id': { $nin: [req.user._id] },
+          totalQuestions: { $gt: 0 }
+        },
+        { _id: { $in: testId } }
+      ]
+    }
+    let testList = await QuizList.paginate(query, options, req.pagination)
+    return testList
   })
 }
