@@ -4,6 +4,7 @@ const { json } = require('micro')
 const validation = require('@bit/tungtung.micro.components.micro-joi')
 const { getQueryFromKey } = require('components/create-query-community')
 const pagination = require('@bit/tungtung.micro.components.micro-crud/micro-crud/pagination')
+const constants = require('../../constants')
 
 module.exports = {
   create: validation(
@@ -22,19 +23,15 @@ module.exports = {
       closingTime: Joi.date(),
       showResultTime: Joi.date(),
       password: Joi.string(),
-      price: Joi.object().keys({
-        value: Joi.number(),
-        label: Joi.string()
-      })
+      price: Joi.number(),
+      step: Joi.number()
     })
   )(async req => {
     const body = await json(req)
     const data = {
       ...body,
-      totalQuestions: body.quizzes.length
-    }
-    if (typeof body.price === 'object') {
-      data.isFree = parseInt(body.price.value) === 0
+      totalQuestions: body.quizzes.length,
+      status: body.step === 4 ? constants.testStatus.NEED_REVIEW : constants.testStatus.DRAFT
     }
     let quizList
     if (body._id) {

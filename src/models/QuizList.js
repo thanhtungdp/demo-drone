@@ -41,8 +41,9 @@ const QuizListSchema = new Schema({
     default: 0
   },
   searchField: String,
-  price: {},
+  price: Number,
   isFree: Boolean,
+  step: Number,
   createdAt: {
     type: Date,
     default: Date.now
