@@ -4,6 +4,7 @@ const { getQueryFromKey } = require('components/create-query-community')
 const userAgent = require('useragent')
 const quizlistService = require('components/quizlist-service-community')
 const pagination = require('@bit/tungtung.micro.components.micro-crud/micro-crud/pagination')
+const { testStatus } = require('../../constants')
 
 module.exports = {
   createAccessLog: async req => {
@@ -32,33 +33,33 @@ module.exports = {
 
   getTestDetail: async req => {
     const query = getQueryFromKey(req.params.testKey)
-    const quizList = await QuizList.findOne(query)
-    return quizList
+    const test = await QuizList.findOne(query)
+    return test
   },
   getTestOnlyView: async req => {
     const query = getQueryFromKey(req.params.testKey)
-    const quizList = await QuizList.findOne(query).select({ quizzes: 0 })
-    return quizList
+    const test = await QuizList.findOne(query).select({ quizzes: 0 })
+    return test
   },
   getTestPlay: async req => {
     const query = getQueryFromKey(req.params.testKey)
-    const quizList = await QuizList.findOne(query).select({
+    const test = await QuizList.findOne(query).select({
       'quizzes.correctAnswer': 0
     })
-    return quizList
+    return test
   },
   getTestList: pagination(async req => {
-    const query = { totalQuestions: { $gt: 0 } }
+    const query = { status: { $in: [testStatus.NEW, testStatus.OLD] } }
     const options = {
       sort: { createdAt: -1 }
     }
-    let quizLists = await QuizList.paginate(query, options, req.pagination)
-    return quizLists
+    let testList = await QuizList.paginate(query, options, req.pagination)
+    return testList
   }),
-  getTestListtByPlayed: pagination(async req => {
+  getTestListByPlayed: pagination(async req => {
     const query = {
       'usersPlayed._id': req.user._id,
-      totalQuestions: { $gt: 0 }
+      status: { $in: [testStatus.NEW, testStatus.OLD] }
     }
     const options = {
       sort: { createdAt: -1 }
@@ -74,13 +75,9 @@ module.exports = {
       sort: { createdAt: -1 }
     }
     let query = {
-      $and: [
-        {
-          'usersPlayed._id': { $nin: [req.user._id] },
-          totalQuestions: { $gt: 0 }
-        },
-        { _id: { $in: testId } }
-      ]
+      'usersPlayed._id': { $nin: [req.user._id] },
+      totalQuestions: { $gt: 0 },
+      _id: { $in: testId }
     }
     let testList = await QuizList.paginate(query, options, req.pagination)
     return testList

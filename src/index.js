@@ -23,10 +23,11 @@ module.exports = routerConbine(
   adminNamespace(
     post('/', composeMiddle(adminRoute.create)),
     get('/created', composeMiddle(adminRoute.getTestListByCreated)),
+    get('/draft', composeMiddle(adminRoute.getTestListByDraft)),
     get('/update/:testKey', composeMiddle(adminRoute.getTestForUpdate))
   ),
   userNamespace(
-    get('/played', composeMiddle(playerRoute.getTestListtByPlayed)),
+    get('/played', composeMiddle(playerRoute.getTestListByPlayed)),
     get('/playing', composeMiddle(playerRoute.getTestListByPlaying)),
     get('/:testKey/access-log', composeMiddle(playerRoute.createAccessLog)),
     get('/:testKey/only-view', composeMiddle(playerRoute.getTestOnlyView)),

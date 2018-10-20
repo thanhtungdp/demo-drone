@@ -4,7 +4,7 @@ const { json } = require('micro')
 const validation = require('@bit/tungtung.micro.components.micro-joi')
 const { getQueryFromKey } = require('components/create-query-community')
 const pagination = require('@bit/tungtung.micro.components.micro-crud/micro-crud/pagination')
-const constants = require('../../constants')
+const { testStatus } = require('../../constants')
 
 module.exports = {
   create: validation(
@@ -31,17 +31,17 @@ module.exports = {
     const data = {
       ...body,
       totalQuestions: body.quizzes.length,
-      status: body.step === 4 ? constants.testStatus.NEED_REVIEW : constants.testStatus.DRAFT
+      status: body.step === 4 ? testStatus.NEED_REVIEW : testStatus.DRAFT
     }
-    let quizList
+    let testList
     if (body._id) {
       const { _id } = data
       delete data._id
-      quizList = await QuizList.update({ _id }, data, req.user)
+      testList = await QuizList.update({ _id }, data, req.user)
     } else {
-      quizList = await QuizList.create(data, req.user)
+      testList = await QuizList.create(data, req.user)
     }
-    return quizList
+    return testList
   }),
   getTestForUpdate: async req => {
     const query = getQueryFromKey(req.params.testKey)
@@ -60,12 +60,28 @@ module.exports = {
       closingTime: 1,
       showResultTime: 1,
       password: 1,
-      price: 1
+      price: 1,
+      step: 1
     })
     return test
   },
   getTestListByCreated: pagination(async req => {
-    const query = { 'owner._id': req.user._id }
+    const query = {
+      $and: [
+        { 'owner._id': req.user._id },
+        { status: { $nin: [testStatus.DRAFT] } }
+      ]
+    }
+    const options = {
+      sort: { createdAt: -1 }
+    }
+    let testList = await QuizList.paginate(query, options, req.pagination)
+    return testList
+  }),
+  getTestListByDraft: pagination(async req => {
+    const query = {
+      $and: [{ 'owner._id': req.user._id }, { status: testStatus.DRAFT }]
+    }
     const options = {
       sort: { createdAt: -1 }
     }
