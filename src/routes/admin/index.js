@@ -60,7 +60,8 @@ module.exports = {
       closingTime: 1,
       showResultTime: 1,
       password: 1,
-      price: 1
+      price: 1,
+      step: 1
     })
     return test
   },
