@@ -73,9 +73,10 @@ module.exports = {
       ]
     }
     const options = {
-      sort: { createdAt: -1 }
+      sort: { createdAt: -1 },
+      ...req.pagination
     }
-    let testList = await QuizList.paginate(query, options, req.pagination)
+    let testList = await QuizList.paginate(query, options)
     return testList
   }),
   getTestListByDraft: pagination(async req => {
@@ -83,9 +84,10 @@ module.exports = {
       $and: [{ 'owner._id': req.user._id }, { status: testStatus.DRAFT }]
     }
     const options = {
-      sort: { createdAt: -1 }
+      sort: { createdAt: -1 },
+      ...req.pagination
     }
-    let testList = await QuizList.paginate(query, options, req.pagination)
+    let testList = await QuizList.paginate(query, options)
     return testList
   })
 }

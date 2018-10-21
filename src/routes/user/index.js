@@ -51,9 +51,10 @@ module.exports = {
   getTestList: pagination(async req => {
     const query = { status: { $in: [testStatus.NEW, testStatus.OLD] } }
     const options = {
-      sort: { createdAt: -1 }
+      sort: { createdAt: -1 },
+      ...req.pagination
     }
-    let testList = await QuizList.paginate(query, options, req.pagination)
+    let testList = await QuizList.paginate(query, options)
     return testList
   }),
   getTestListByPlayed: pagination(async req => {
@@ -62,9 +63,10 @@ module.exports = {
       status: { $in: [testStatus.NEW, testStatus.OLD] }
     }
     const options = {
-      sort: { createdAt: -1 }
+      sort: { createdAt: -1 },
+      ...req.pagination
     }
-    let testList = await QuizList.paginate(query, options, req.pagination)
+    let testList = await QuizList.paginate(query, options)
     return testList
   }),
   getTestListByPlaying: pagination(async req => {
@@ -72,14 +74,15 @@ module.exports = {
       'owner._id': req.user._id
     })
     const options = {
-      sort: { createdAt: -1 }
+      sort: { createdAt: -1 },
+      ...req.pagination
     }
     let query = {
       'usersPlayed._id': { $nin: [req.user._id] },
       totalQuestions: { $gt: 0 },
       _id: { $in: testId }
     }
-    let testList = await QuizList.paginate(query, options, req.pagination)
+    let testList = await QuizList.paginate(query, options)
     return testList
   })
 }
