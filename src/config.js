@@ -1,4 +1,4 @@
 module.exports = {
-  serviceName: 'quizlist',
+  serviceName: 'test',
   mongodbUrl: process.env.MONGODB_URL
 }

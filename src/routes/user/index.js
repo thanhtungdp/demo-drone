@@ -2,7 +2,7 @@ const AccessLog = require('models/AccessLog')
 const QuizList = require('models/QuizList')
 const { getQueryFromKey } = require('components/create-query-community')
 const userAgent = require('useragent')
-const quizlistService = require('components/quizlist-service-community')
+const testService = require('components/test-service-community')
 const pagination = require('@bit/tungtung.micro.components.micro-crud/micro-crud/pagination')
 const { testStatus } = require('../../constants')
 
@@ -17,7 +17,7 @@ module.exports = {
     var browser = req.headers['user-agent']
     var user = req.user
     var ua = userAgent.is(browser)
-    const quizList = await quizlistService().updateAccessCount(req, testKey)
+    const quizList = await testService().updateAccessCount(req, testKey)
     ua.android =
       browser.indexOf('Dalvik') !== -1 || browser.indexOf('Android') !== -1
     ua.iOS = browser.indexOf('iPhone') !== -1

@@ -35,5 +35,22 @@
         "trackDir": "src/components/create-query-community",
         "origin": "AUTHORED"
     },
+    "tungtung.micro/components/test-service-community@0.0.1": {
+        "files": [
+            {
+                "relativePath": "src/components/test-service-community/README.md",
+                "test": false,
+                "name": "README.md"
+            },
+            {
+                "relativePath": "src/components/test-service-community/index.js",
+                "test": false,
+                "name": "index.js"
+            }
+        ],
+        "mainFile": "src/components/test-service-community/index.js",
+        "trackDir": "src/components/test-service-community",
+        "origin": "AUTHORED"
+    },
     "version": "13.0.3"
 }
