@@ -28,6 +28,7 @@ module.exports = {
     })
   )(async req => {
     const body = await json(req)
+    console.log(body)
     const data = {
       ...body,
       totalQuestions: body.questions.length,
@@ -53,7 +54,7 @@ module.exports = {
       time: 1,
       tags: 1,
       mode: 1,
-      rankType: 1,
+      isCustomRank: 1,
       customRank: 1,
       questions: 1,
       type: 1,
