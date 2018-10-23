@@ -14,11 +14,11 @@ module.exports = {
       description: Joi.string().required(),
       time: Joi.number().required(),
       tags: Joi.array(),
-      mode: Joi.object().required(),
-      rankType: Joi.object().required(),
+      mode: Joi.string().required(),
+      isCustomRank: Joi.boolean().required(),
       customRank: Joi.array(),
       quizzes: Joi.array().required(),
-      type: Joi.object().required(),
+      type: Joi.string().required(),
       openingTime: Joi.date(),
       closingTime: Joi.date(),
       showResultTime: Joi.date(),
@@ -28,6 +28,7 @@ module.exports = {
     })
   )(async req => {
     const body = await json(req)
+    console.log(body)
     const data = {
       ...body,
       totalQuestions: body.quizzes.length,
@@ -52,7 +53,7 @@ module.exports = {
       time: 1,
       tags: 1,
       mode: 1,
-      rankType: 1,
+      isCustomRank: 1,
       customRank: 1,
       quizzes: 1,
       type: 1,

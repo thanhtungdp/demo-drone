@@ -12,10 +12,10 @@ const QuizListSchema = new Schema({
   },
   description: String,
   tags: [],
-  mode: {}, // public or private
-  rankType: {}, // auto or custom
+  mode: String, // [PUBLIC, PRIVATE]
+  isCustomRank: Boolean,
   customRank: [],
-  type: {}, // online or offline test
+  type: String, // [ONLINE, OFFLINE]
   openingTime: Date,
   closingTime: Date,
   showResultTime: Date,
