@@ -1,5 +1,5 @@
 const Joi = require('joi')
-const QuizList = require('models/QuizList')
+const Test = require('models/Test')
 const { json } = require('micro')
 const validation = require('@bit/tungtung.micro.components.micro-joi')
 const { getQueryFromKey } = require('components/create-query-community')
@@ -14,11 +14,11 @@ module.exports = {
       description: Joi.string().required(),
       time: Joi.number().required(),
       tags: Joi.array(),
-      mode: Joi.object().required(),
-      rankType: Joi.object().required(),
+      mode: Joi.string().required().valid(['PUBLIC', 'PRIVATE']),
       customRank: Joi.array(),
-      quizzes: Joi.array().required(),
-      type: Joi.object().required(),
+      questions: Joi.array().required(),
+      isCustomRank: Joi.boolean().required(),
+      type: Joi.string().required().valid(['ONLINE', 'OFFLINE']),
       openingTime: Joi.date(),
       closingTime: Joi.date(),
       showResultTime: Joi.date(),
@@ -30,22 +30,23 @@ module.exports = {
     const body = await json(req)
     const data = {
       ...body,
-      totalQuestions: body.quizzes.length,
+      totalQuestions: body.questions.length,
       status: body.step === 4 ? testStatus.NEED_REVIEW : testStatus.DRAFT
     }
-    let testList
+    let test
     if (body._id) {
       const { _id } = data
       delete data._id
-      testList = await QuizList.update({ _id }, data, req.user)
+      test = await Test.update({ _id }, data, req.user)
     } else {
-      testList = await QuizList.create(data, req.user)
+      test = await Test.create(data, req.user)
     }
-    return testList
+    return test
   }),
+
   getTestForUpdate: async req => {
     const query = getQueryFromKey(req.params.testKey)
-    let test = await QuizList.findOne(query).select({
+    let test = await Test.findOne(query).select({
       _id: 1,
       title: 1,
       description: 1,
@@ -54,7 +55,7 @@ module.exports = {
       mode: 1,
       rankType: 1,
       customRank: 1,
-      quizzes: 1,
+      questions: 1,
       type: 1,
       openingTime: 1,
       closingTime: 1,
@@ -76,7 +77,7 @@ module.exports = {
       sort: { createdAt: -1 },
       ...req.pagination
     }
-    let testList = await QuizList.paginate(query, options)
+    let testList = await Test.paginate(query, options)
     return testList
   }),
   getTestListByDraft: pagination(async req => {
@@ -87,7 +88,7 @@ module.exports = {
       sort: { createdAt: -1 },
       ...req.pagination
     }
-    let testList = await QuizList.paginate(query, options)
+    let testList = await Test.paginate(query, options)
     return testList
   })
 }

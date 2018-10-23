@@ -1,4 +1,4 @@
-const QuizList = require('models/QuizList')
+const Test = require('models/Test')
 const AccessLog = require('models/AccessLog')
 const { json } = require('micro')
 const { getQueryFromKey } = require('components/create-query-community')
@@ -6,12 +6,12 @@ const { getQueryFromKey } = require('components/create-query-community')
 module.exports = {
   getTestItem: async req => {
     const query = getQueryFromKey(req.params.testKey)
-    const quizList = await QuizList.findOne(query)
-    return quizList
+    const test = await Test.findOne(query)
+    return test
   },
   getTestInfo: async req => {
     const query = getQueryFromKey(req.params.testKey)
-    const quizList = await QuizList.findOne(query).select({
+    const test = await Test.findOne(query).select({
       id: 1,
       _id: 1,
       slug: 1,
@@ -22,22 +22,22 @@ module.exports = {
       searchField: 1,
       owner: 1
     })
-    return quizList
+    return test
   },
   updateAccessCount: async req => {
     const query = getQueryFromKey(req.params.testKey)
-    const quizList = await QuizList.findOne(query)
-    quizList.updateAccessCount()
+    const test = await Test.findOne(query)
+    test.updateAccessCount()
     return {
-      id: quizList.id,
-      _id: quizList._id,
-      slug: quizList.slug,
-      title: quizList.title,
-      time: quizList.time,
-      description: quizList.description,
-      totalQuestions: quizList.totalQuestions,
-      searchField: quizList.searchField,
-      owner: quizList.owner
+      id: test.id,
+      _id: test._id,
+      slug: test.slug,
+      title: test.title,
+      time: test.time,
+      description: test.description,
+      totalQuestions: test.totalQuestions,
+      searchField: test.searchField,
+      owner: test.owner
     }
   },
   getAccessLog: async req => {
@@ -52,17 +52,17 @@ module.exports = {
         { 'usersPlayed._id': { $nin: [req.user._id] } }
       ]
     }
-    const quizList = await QuizList.savedUserSubmit(query, req.user)
-    return quizList
+    const test = await Test.savedUserSubmit(query, req.user)
+    return test
   },
   updateRating: async req => {
     let body = await json(req)
     const query = getQueryFromKey(req.params.testKey)
-    let quizList = await QuizList.findOne(query)
+    let test = await Test.findOne(query)
     let data = {
       rating: body.rating
     }
-    let rating = await quizList.updateRating(data)
+    let rating = await test.updateRating(data)
     return rating
   }
 }
