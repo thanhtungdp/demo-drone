@@ -87,7 +87,6 @@ module.exports = createModel(
     update: function (query = {}, data, owner) {
       let fields = {}
       if (data.title) {
-        fields.slug = slug(data.title, true)
         fields.searchField = slug(data.title, false, ' ').toLowerCase()
       }
       return this.findOneAndUpdate(

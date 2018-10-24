@@ -50,7 +50,8 @@ module.exports = {
     const updatedTest = await Test.update(
       query,
       {
-        quizzes: body.questions,
+        questions: body.questions,
+        totalQuestions: body.questions.length,
         status: testStatus.DRAFT,
         step: 3
       },
@@ -83,7 +84,6 @@ module.exports = {
   }),
   getTestForUpdate: async req => {
     const query = getQueryFromKey(req.params.testKey)
-    console.log(query)
     let test = await Test.findOne(query).select({
       _id: 1,
       title: 1,
