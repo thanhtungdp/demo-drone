@@ -43,7 +43,10 @@ const QuizListSchema = new Schema({
   searchField: String,
   price: Number,
   isFree: Boolean,
-  step: Number,
+  step: {
+    type: Number,
+    default: 1
+  },
   createdAt: {
     type: Date,
     default: Date.now
@@ -76,18 +79,23 @@ module.exports = createModel(
         ...data,
         slug: slug(data.title, true),
         searchField: slug(data.title, false, ' ').toLowerCase(),
-        owner: owner
+        owner: owner,
+        step: 2
       })
       return quizlist.save()
     },
     update: function (query = {}, data, owner) {
+      let fields = {}
+      if (data.title) {
+        fields.slug = slug(data.title, true)
+        fields.searchField = slug(data.title, false, ' ').toLowerCase()
+      }
       return this.findOneAndUpdate(
         query,
         {
           $set: {
             ...data,
-            slug: slug(data.title, true),
-            searchField: slug(data.title, false, ' ').toLowerCase(),
+            ...fields,
             owner: owner
           }
         },

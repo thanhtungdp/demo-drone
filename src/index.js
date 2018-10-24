@@ -21,7 +21,14 @@ const routerConbine = (...args) => cors(router(...args))
 
 module.exports = routerConbine(
   adminNamespace(
+    // Create new test
     post('/', composeMiddle(adminRoute.create)),
+    // Update test info
+    put('/:testKey/test-info', composeMiddle(adminRoute.updateTestInfo)),
+    // Update questions
+    put('/:testKey/questions', composeMiddle(adminRoute.updateQuestions)),
+    // Update test form
+    put('/:testKey/test-form', composeMiddle(adminRoute.updateTestForm)),
     get('/created', composeMiddle(adminRoute.getTestListByCreated)),
     get('/draft', composeMiddle(adminRoute.getTestListByDraft)),
     get('/update/:testKey', composeMiddle(adminRoute.getTestForUpdate))
