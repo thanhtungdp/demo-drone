@@ -1,5 +1,5 @@
 const Joi = require('joi')
-const QuizList = require('models/QuizList')
+const Test = require('models/Test')
 const { json } = require('micro')
 const validation = require('@bit/tungtung.micro.components.micro-joi')
 const { getQueryFromKey } = require('components/create-query-community')
@@ -22,7 +22,7 @@ const createTestOrUpdateTestInfo = validation(
   if (req.params.testKey) {
     // Update
     const query = getQueryFromKey(req.params.testKey)
-    test = await QuizList.update(
+    test = await Test.update(
       query,
       {
         ...body,
@@ -32,7 +32,7 @@ const createTestOrUpdateTestInfo = validation(
     )
   } else {
     // Create
-    test = await QuizList.create(body, req.user)
+    test = await Test.create(body, req.user)
   }
   return test
 })
@@ -47,7 +47,7 @@ module.exports = {
   )(async req => {
     const body = await json(req)
     const query = getQueryFromKey(req.params.testKey)
-    const updatedTest = await QuizList.update(
+    const updatedTest = await Test.update(
       query,
       {
         quizzes: body.questions,
@@ -70,7 +70,7 @@ module.exports = {
   )(async req => {
     const body = await json(req)
     const query = getQueryFromKey(req.params.testKey)
-    const updatedTest = await QuizList.update(
+    const updatedTest = await Test.update(
       query,
       {
         ...body,
@@ -81,47 +81,10 @@ module.exports = {
     )
     return updatedTest
   }),
-  // create: validation(
-  //   Joi.object({
-  //     _id: Joi.any().optional(),
-  //     title: Joi.string().required(),
-  //     description: Joi.string().required(),
-  //     time: Joi.number().required(),
-  //     tags: Joi.array(),
-  //     mode: Joi.string().required(),
-  //     isCustomRank: Joi.boolean().required(),
-  //     customRank: Joi.array(),
-  //     quizzes: Joi.array().required(),
-  //     type: Joi.string().required(),
-  //     openingTime: Joi.date(),
-  //     closingTime: Joi.date(),
-  //     showResultTime: Joi.date(),
-  //     password: Joi.string(),
-  //     price: Joi.number(),
-  //     step: Joi.number()
-  //   })
-  // )(async req => {
-  //   const body = await json(req)
-  //   console.log(body)
-  //   const data = {
-  //     ...body,
-  //     totalQuestions: body.quizzes.length,
-  //     status: body.step === 4 ? testStatus.NEED_REVIEW : testStatus.DRAFT
-  //   }
-  //   let testList
-  //   if (body._id) {
-  //     const { _id } = data
-  //     delete data._id
-  //     testList = await QuizList.update({ _id }, data, req.user)
-  //   } else {
-  //     testList = await QuizList.create(data, req.user)
-  //   }
-  //   return testList
-  // }),
   getTestForUpdate: async req => {
     const query = getQueryFromKey(req.params.testKey)
     console.log(query)
-    let test = await QuizList.findOne(query).select({
+    let test = await Test.findOne(query).select({
       _id: 1,
       title: 1,
       slug: 1,
@@ -131,7 +94,7 @@ module.exports = {
       mode: 1,
       isCustomRank: 1,
       customRank: 1,
-      quizzes: 1,
+      questions: 1,
       type: 1,
       openingTime: 1,
       closingTime: 1,
@@ -153,7 +116,7 @@ module.exports = {
       sort: { createdAt: -1 },
       ...req.pagination
     }
-    let testList = await QuizList.paginate(query, options)
+    let testList = await Test.paginate(query, options)
     return testList
   }),
   getTestListByDraft: pagination(async req => {
@@ -164,7 +127,7 @@ module.exports = {
       sort: { createdAt: -1 },
       ...req.pagination
     }
-    let testList = await QuizList.paginate(query, options)
+    let testList = await Test.paginate(query, options)
     return testList
   })
 }

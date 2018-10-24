@@ -1,6 +1,6 @@
 # Use Create-query
 
 ```javascript
-const { getQueryFromKey, getQueryQuizListFromKey } = require('@bit/tungtung.micro.components.create-query-community')
+const { getQueryFromKey, getQueryTestFromKey } = require('@bit/tungtung.micro.components.create-query-community')
 
 ```
