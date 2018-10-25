@@ -26,6 +26,7 @@ const createTestOrUpdateTestInfo = validation(
       query,
       {
         ...body,
+        step: 2,
         status: testStatus.DRAFT
       },
       req.user
@@ -101,7 +102,8 @@ module.exports = {
       showResultTime: 1,
       password: 1,
       price: 1,
-      step: 1
+      step: 1,
+      status: 1
     })
     return test
   },
