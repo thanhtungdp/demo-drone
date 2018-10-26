@@ -5,6 +5,8 @@ const userAgent = require('useragent')
 const testService = require('components/test-service-community')
 const pagination = require('@bit/tungtung.micro.components.micro-crud/micro-crud/pagination')
 const { testStatus } = require('../../constants')
+const boom = require('boom')
+const error = require('../../error')
 
 module.exports = {
   createAccessLog: async req => {
@@ -38,13 +40,18 @@ module.exports = {
   },
   getTestOnlyView: async req => {
     const query = getQueryFromKey(req.params.testKey)
-    const test = await Test.findOne(query).select({ quizzes: 0 })
+    const test = await Test.findOne(query).select({ questions: 0 })
+    if (!test) {
+      throw boom.notAcceptable(error.TEST_NOT_FOUND, {
+        name: error.TEST_NOT_FOUND
+      })
+    }
     return test
   },
   getTestPlay: async req => {
     const query = getQueryFromKey(req.params.testKey)
     const test = await Test.findOne(query).select({
-      'quizzes.correctAnswer': 0
+      'questions.correctAnswer': 0
     })
     return test
   },
