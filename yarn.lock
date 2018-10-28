@@ -172,13 +172,12 @@
     mongoose "^5.1.7"
     slug "^0.9.1"
 
-"@bit/tungtung.micro.components.mongo@^0.0.3":
-  version "0.0.3"
-  resolved "https://node.bitsrc.io/tungtung.micro.components.mongo/-/tungtung.micro.components.mongo-0.0.3.tgz#4068f747851358ef7009366b2f52f45d73d5136a"
+"@bit/tungtung.micro.components.mongo@^0.0.7":
+  version "0.0.7"
+  resolved "https://node.bitsrc.io/tungtung.micro.components.mongo/-/tungtung.micro.components.mongo-0.0.7.tgz#be8a493612d5f49ebae3f94084f6ead6182a5432"
   dependencies:
     chalk "^2.4.1"
     mongoose "^5.1.7"
-    mongoose-paginate "^5.0.3"
 
 "@concordance/react@^1.0.0":
   version "1.0.0"
@@ -3411,7 +3410,7 @@ mongoose-legacy-pluralize@1.0.2:
 
 mongoose-paginate@^5.0.3:
   version "5.0.3"
-  resolved "https://registry.yarnpkg.com/mongoose-paginate/-/mongoose-paginate-5.0.3.tgz#d7ae49ed5bf64f1f7af7620ea865b67058c55371"
+  resolved "https://registry.npmjs.org/mongoose-paginate/-/mongoose-paginate-5.0.3.tgz#d7ae49ed5bf64f1f7af7620ea865b67058c55371"
   dependencies:
     bluebird "3.0.5"
 
