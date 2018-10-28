@@ -1,5 +1,5 @@
 const { Schema } = require('mongoose')
-const createModel = require('@bit/tungtung.micro.components.mongo/createModel')
+const { createModelSimple } = require('@bit/tungtung.micro.components.mongo')
 const { slug } = require('@bit/tungtung.micro.components.mongo-slug')
 
 const TestSchema = new Schema({
@@ -68,7 +68,7 @@ TestSchema.methods.updateRating = function (data = {}) {
   return this.save()
 }
 
-module.exports = createModel(
+module.exports = createModelSimple(
   {
     name: 'tests',
     schema: TestSchema

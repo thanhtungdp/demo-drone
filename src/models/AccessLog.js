@@ -1,5 +1,5 @@
 const { Schema } = require('mongoose')
-const createModel = require('@bit/tungtung.micro.components.mongo/createModel')
+const { createModelSimple } = require('@bit/tungtung.micro.components.mongo')
 
 const AccessLogSchema = new Schema({
   owner: {},
@@ -22,7 +22,7 @@ const AccessLogSchema = new Schema({
   updatedAt: { type: Date, default: Date.now }
 })
 
-module.exports = createModel(
+module.exports = createModelSimple(
   {
     name: 'accesslogs',
     schema: AccessLogSchema

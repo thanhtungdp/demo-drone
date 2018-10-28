@@ -18,5 +18,43 @@
         "trackDir": "src/components/create-query-community",
         "origin": "AUTHORED"
     },
-    "version": "13.0.3"
+    "tungtung.micro/components/mongo@0.0.7": {
+        "files": [
+            {
+                "relativePath": "README.md",
+                "test": false,
+                "name": "README.md"
+            },
+            {
+                "relativePath": "connect.js",
+                "test": false,
+                "name": "connect.js"
+            },
+            {
+                "relativePath": "connectSimple.js",
+                "test": false,
+                "name": "connectSimple.js"
+            },
+            {
+                "relativePath": "createModel.js",
+                "test": false,
+                "name": "createModel.js"
+            },
+            {
+                "relativePath": "createModelSimple.js",
+                "test": false,
+                "name": "createModelSimple.js"
+            },
+            {
+                "relativePath": "index.js",
+                "test": false,
+                "name": "index.js"
+            }
+        ],
+        "mainFile": "index.js",
+        "rootDir": "src/components/mongo",
+        "origin": "IMPORTED",
+        "originallySharedDir": "src/components/mongo"
+    },
+    "version": "13.0.4"
 }

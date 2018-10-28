@@ -21,7 +21,7 @@
     "@bit/tungtung.micro.components.micro-crud": "^0.0.1",
     "@bit/tungtung.micro.components.micro-joi": "^0.0.1",
     "@bit/tungtung.micro.components.middleware-auth-community": "^1.0.0",
-    "@bit/tungtung.micro.components.mongo": "^0.0.3",
+    "@bit/tungtung.micro.components.mongo": "^0.0.4",
     "@bit/tungtung.micro.components.mongo-slug": "^0.0.1",
     "ava": "^0.25.0",
     "axios": "^0.18.0",
