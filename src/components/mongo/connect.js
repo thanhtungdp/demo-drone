@@ -9,11 +9,11 @@ module.exports = function connectDatabaseUrl (url, options = {}) {
     mongoose
       .createConnection(
         url,
-      {
-        connectTimeoutMS: TIMEOUT_RECONNECT,
-        autoReconnect: true,
-        ...options
-      },
+        {
+          connectTimeoutMS: TIMEOUT_RECONNECT,
+          autoReconnect: true,
+          ...options
+        },
         (err, result) => {
           if (err) reject(err)
           console.log(chalk.green('connected to database'))

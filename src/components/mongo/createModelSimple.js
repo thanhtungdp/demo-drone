@@ -1,7 +1,6 @@
 const mongoose = require('mongoose')
 const mongoosePaginate = require('mongoose-paginate')
 
-
 function createModelDao (conn, name, schema, methods) {
   schema.plugin(mongoosePaginate)
   const Model = conn.models[name] ? conn.model(name) : conn.model(name, schema)

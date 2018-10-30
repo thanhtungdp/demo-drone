@@ -13,8 +13,8 @@ function getQueryFromKey (key) {
 function getQueryTestFromKey (key) {
   return key
     ? isObjectId(key)
-        ? { $or: [{ 'test._id': key }, { 'test.slug': key }] }
-        : { 'test.slug': key }
+      ? { $or: [{ 'test._id': key }, { 'test.slug': key }] }
+      : { 'test.slug': key }
     : {}
 }
 
