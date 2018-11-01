@@ -43,6 +43,7 @@ module.exports = routerConbine(
     get('/', composeMiddle(playerRoute.getTestList))
   ),
   get('/health', () => 'Working...'),
+  post('/', composeMiddle(internalRoute.getTestList)),
   get('/access-log/:accessLogId', composeMiddle(internalRoute.getAccessLog)),
   get('/:testKey/access-count', composeMiddle(internalRoute.updateAccessCount)),
   get('/:testKey/submited', composeMiddle(internalRoute.updatePlayerSubmited)),
