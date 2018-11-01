@@ -58,9 +58,25 @@ async function updatePlayerSubmited (service, req, testKey) {
     throw e
   }
 }
+
 async function updateRating (service, req, testKey, data) {
   try {
     const dataRes = await axios.put(service + '/' + testKey + '/rating', data, {
+      headers: {
+        common: {
+          ...req.headers
+        }
+      }
+    })
+    return dataRes.data
+  } catch (e) {
+    throw e
+  }
+}
+
+async function getTestListFromTestListKey (service, req, data) {
+  try {
+    const dataRes = await axios.post(service + '/', data, {
       headers: {
         common: {
           ...req.headers
@@ -82,6 +98,8 @@ module.exports = (service = process.env.TEST_SERVICE) => {
     updatePlayerSubmited: (req, testKey) =>
       updatePlayerSubmited(service, req, testKey),
     updateRating: (req, testKey, data) =>
-      updateRating(service, req, testKey, data)
+      updateRating(service, req, testKey, data),
+    getTestListFromTestListKey: (req, data) =>
+      getTestListFromTestListKey(service, req, data)
   }
 }

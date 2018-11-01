@@ -9,6 +9,14 @@ module.exports = {
     const test = await Test.findOne(query)
     return test
   },
+  getTestList: async req => {
+    let body = await json(req)
+    let query = { _id: { $in: body.testList } }
+    let testList = await Test.find(query).select({
+      questions: 0
+    })
+    return testList
+  },
   getTestInfo: async req => {
     const query = getQueryFromKey(req.params.testKey)
     const test = await Test.findOne(query).select({
