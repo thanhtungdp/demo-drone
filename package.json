@@ -29,7 +29,6 @@
     "chalk": "^2.4.1",
     "dotenv": "^6.0.0",
     "faker": "^4.1.0",
-    "husky": "^1.1.2",
     "joi": "^13.4.0",
     "micro": "latest",
     "micro-cors": "^0.1.0",
@@ -46,5 +45,8 @@
     "url": "^0.11.0",
     "useragent": "^2.3.0"
   },
-  "license": "MIT"
+  "license": "MIT",
+  "devDependencies": {
+    "husky": "^1.1.3"
+  }
 }
