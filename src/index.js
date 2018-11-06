@@ -39,6 +39,10 @@ module.exports = routerConbine(
     get('/playing', composeMiddle(playerRoute.getTestListByPlaying)),
     get('/:testKey/bookmark', composeMiddle(playerRoute.bookmarkTest)),
     get('/:testKey/un-bookmark', composeMiddle(playerRoute.unBookmarkTest)),
+    get(
+      '/:testKey/check-bookmarked',
+      composeMiddle(playerRoute.checkBookmarked)
+    ),
     get('/:testKey/access-log', composeMiddle(playerRoute.createAccessLog)),
     get('/:testKey/only-view', composeMiddle(playerRoute.getTestOnlyView)),
     get('/:testKey/play', composeMiddle(playerRoute.getTestPlay)),

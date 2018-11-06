@@ -101,5 +101,17 @@ module.exports = {
     const query = getQueryFromKey(req.params.testKey)
     let test = await Test.deleteBookmarker(query, req.user)
     return test
+  },
+  checkBookmarked: async req => {
+    const query = {
+      $and: [
+        getQueryFromKey(req.params.testKey),
+        { 'bookmarker._id': req.user._id }
+      ]
+    }
+    let test = await Test.findOne(query)
+    return {
+      isBookmarked: !!test
+    }
   }
 }
