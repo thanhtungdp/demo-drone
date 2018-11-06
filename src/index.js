@@ -31,11 +31,14 @@ module.exports = routerConbine(
     put('/:testKey/test-form', composeMiddle(adminRoute.updateTestForm)),
     get('/created', composeMiddle(adminRoute.getTestListByCreated)),
     get('/draft', composeMiddle(adminRoute.getTestListByDraft)),
+    get('/bookmarked', composeMiddle(adminRoute.getTestBookmark)),
     get('/update/:testKey', composeMiddle(adminRoute.getTestForUpdate))
   ),
   userNamespace(
     get('/played', composeMiddle(playerRoute.getTestListByPlayed)),
     get('/playing', composeMiddle(playerRoute.getTestListByPlaying)),
+    get('/:testKey/bookmark', composeMiddle(playerRoute.bookmarkTest)),
+    get('/:testKey/un-bookmark', composeMiddle(playerRoute.unBookmarkTest)),
     get('/:testKey/access-log', composeMiddle(playerRoute.createAccessLog)),
     get('/:testKey/only-view', composeMiddle(playerRoute.getTestOnlyView)),
     get('/:testKey/play', composeMiddle(playerRoute.getTestPlay)),

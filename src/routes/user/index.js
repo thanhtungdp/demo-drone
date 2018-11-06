@@ -91,5 +91,15 @@ module.exports = {
     }
     let testList = await Test.paginate(query, options)
     return testList
-  })
+  }),
+  bookmarkTest: async req => {
+    const query = getQueryFromKey(req.params.testKey)
+    let test = await Test.saveBookmarker(query, req.user)
+    return test
+  },
+  unBookmarkTest: async req => {
+    const query = getQueryFromKey(req.params.testKey)
+    let test = await Test.deleteBookmarker(query, req.user)
+    return test
+  }
 }

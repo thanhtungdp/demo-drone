@@ -30,6 +30,7 @@ const TestSchema = new Schema({
   editors: [{}],
   viewers: [{}],
   buyers: [{}],
+  bookmarker: [{}],
   accessibility: String,
   usersPlayed: [{}],
   totalRatings: {
@@ -108,7 +109,25 @@ module.exports = createModelSimple(
       return this.findOneAndUpdate(
         query,
         {
-          $push: { usersPlayed: player }
+          $addToSet: { usersPlayed: player }
+        },
+        { new: true }
+      )
+    },
+    saveBookmarker: function (query = {}, player) {
+      return this.findOneAndUpdate(
+        query,
+        {
+          $addToSet: { bookmarker: player }
+        },
+        { new: true }
+      )
+    },
+    deleteBookmarker: function (query = {}, player) {
+      return this.findOneAndUpdate(
+        query,
+        {
+          $pull: { bookmarker: player }
         },
         { new: true }
       )

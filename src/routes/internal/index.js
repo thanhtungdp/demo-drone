@@ -54,12 +54,7 @@ module.exports = {
     return accessLog
   },
   updatePlayerSubmited: async req => {
-    const query = {
-      $and: [
-        getQueryFromKey(req.params.testKey),
-        { 'usersPlayed._id': { $nin: [req.user._id] } }
-      ]
-    }
+    const query = getQueryFromKey(req.params.testKey)
     const test = await Test.savedUserSubmit(query, req.user)
     return test
   },

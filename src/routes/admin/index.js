@@ -147,5 +147,16 @@ module.exports = {
     }
     let testList = await Test.paginate(query, options)
     return testList
+  }),
+  getTestBookmark: pagination(async req => {
+    const options = {
+      sort: { createdAt: -1 },
+      ...req.pagination
+    }
+    let query = {
+      'bookmarker._id': req.user._id
+    }
+    let testList = await Test.paginate(query, options)
+    return testList
   })
 }

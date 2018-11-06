@@ -13,8 +13,8 @@ function getQueryFromKey (key) {
 function getQueryTestFromKey (key) {
   return key
     ? isObjectId(key)
-        ? { $or: [{ 'test._id': key }, { 'test.slug': key }] }
-        : { 'test.slug': key }
+      ? { $or: [{ 'test._id': key }, { 'test.slug': key }] }
+      : { 'test.slug': key }
     : {}
 }
 
@@ -22,10 +22,10 @@ function getQueryUser (key) {
   return key
     ? {
       $or: [
-          { 'player._id': key },
-          { 'player.username': key },
-          { 'owner._id': key },
-          { 'owner.username': key }
+        { 'player._id': key },
+        { 'player.username': key },
+        { 'owner._id': key },
+        { 'owner.username': key }
       ]
     }
     : {}
