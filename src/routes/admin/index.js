@@ -6,6 +6,8 @@ const { getQueryFromKey } = require('components/create-query-community')
 const pagination = require('@bit/tungtung.micro.components.micro-crud/micro-crud/pagination')
 const { testStatus } = require('../../constants')
 const axios = require('axios')
+const amqp = require('amqp')
+
 const createTestOrUpdateTestInfo = validation(
   Joi.object({
     title: Joi.string().required(),
@@ -34,6 +36,10 @@ const createTestOrUpdateTestInfo = validation(
   } else {
     // Create
     test = await Test.create(body, req.user)
+
+    amqp.publish('TEST_CREATED', {
+      user: req.user
+    })
     /**
      * import data to elasticsearch
      */
