@@ -29,6 +29,8 @@ module.exports = routerConbine(
     put('/:testKey/questions', composeMiddle(adminRoute.updateQuestions)),
     // Update test form
     put('/:testKey/test-form', composeMiddle(adminRoute.updateTestForm)),
+    // Submit for review
+    put('/:testKey/submit-for-review', composeMiddle(adminRoute.submitForReview)),
     get('/created', composeMiddle(adminRoute.getTestListByCreated)),
     get('/draft', composeMiddle(adminRoute.getTestListByDraft)),
     get('/bookmarked', composeMiddle(adminRoute.getTestBookmark)),

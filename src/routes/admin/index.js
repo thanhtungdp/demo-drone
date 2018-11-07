@@ -105,6 +105,19 @@ module.exports = {
     )
     return updatedTest
   }),
+  submitForReview: async req => {
+    // Gửi đề thi cho admin duyệt
+    const query = getQueryFromKey(req.params.testKey)
+    const updatedTest = await Test.update(
+      query,
+      {
+        status: testStatus.NEED_REVIEW,
+        step: 4
+      },
+      req.user
+    )
+    return updatedTest
+  },
   getTestForUpdate: async req => {
     const query = getQueryFromKey(req.params.testKey)
     let test = await Test.findOne(query).select({
