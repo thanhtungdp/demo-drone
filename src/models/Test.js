@@ -22,7 +22,10 @@ const TestSchema = new Schema({
   password: String, // password access test
   status: String,
   pdfFile: String,
-  totalQuestions: Number,
+  totalQuestions: {
+    type: Number,
+    default: 0
+  },
   category: {},
   questions: [{}],
   owner: {},
