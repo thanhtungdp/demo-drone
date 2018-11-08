@@ -113,5 +113,22 @@ module.exports = {
     return {
       isBookmarked: !!test
     }
+  },
+  getTestCheckBookmark: async req => {
+    let testList = await Test.aggregate([
+      {
+        $project: {
+          bookmarkerIds: {
+            $map: { input: '$bookmarker', as: 'bmk', in: '$$bmk._id' }
+          }
+        }
+      },
+      {
+        $project: {
+          isBookmarked: { $in: [req.user._id, '$bookmarkerIds'] }
+        }
+      }
+    ])
+    return testList
   }
 }

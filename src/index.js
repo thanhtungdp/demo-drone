@@ -1,4 +1,4 @@
-const { router, get, post, put, withNamespace } = require('microrouter')
+const { router, get, post, put, del, withNamespace } = require('microrouter')
 const { handleErrors } = require('@bit/tungtung.micro.components.micro-boom')
 const createMiddlewareAuth = require('@bit/tungtung.micro.components.middleware-auth-community')
 const cors = require('micro-cors')({ origin: '*' })
@@ -30,7 +30,11 @@ module.exports = routerConbine(
     // Update test form
     put('/:testKey/test-form', composeMiddle(adminRoute.updateTestForm)),
     // Submit for review
-    put('/:testKey/submit-for-review', composeMiddle(adminRoute.submitForReview)),
+    put(
+      '/:testKey/submit-for-review',
+      composeMiddle(adminRoute.submitForReview)
+    ),
+    del('/:testKey', composeMiddle(adminRoute.deleteTest)),
     get('/created', composeMiddle(adminRoute.getTestListByCreated)),
     get('/draft', composeMiddle(adminRoute.getTestListByDraft)),
     get('/bookmarked', composeMiddle(adminRoute.getTestBookmark)),
@@ -39,6 +43,7 @@ module.exports = routerConbine(
   userNamespace(
     get('/played', composeMiddle(playerRoute.getTestListByPlayed)),
     get('/playing', composeMiddle(playerRoute.getTestListByPlaying)),
+    get('/bookmarked', composeMiddle(playerRoute.getTestCheckBookmark)),
     get('/:testKey/bookmark', composeMiddle(playerRoute.bookmarkTest)),
     get('/:testKey/un-bookmark', composeMiddle(playerRoute.unBookmarkTest)),
     get(

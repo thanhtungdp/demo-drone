@@ -3,5 +3,5 @@ module.exports = {
   mongodbUrl: process.env.MONGODB_URL,
   publicApp: `${process.env.SUPPORTED_PROTOCOL}://${process.env.DOMAIN_NAME}`,
   publicAppProtocol: process.env.PUBLIC_APP_PROTOCOL,
-  AMQP: process.env.AMQP,
+  AMQP: process.env.AMQP
 }

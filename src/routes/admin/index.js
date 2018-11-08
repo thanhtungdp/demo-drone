@@ -177,5 +177,15 @@ module.exports = {
     }
     let testList = await Test.paginate(query, options)
     return testList
-  })
+  }),
+  deleteTest: async req => {
+    let query = {
+      $and: [
+        getQueryFromKey(req.params.testKey),
+        { 'owner._id': req.user._id }
+      ]
+    }
+    let test = await Test.remove(query)
+    return test
+  }
 }
