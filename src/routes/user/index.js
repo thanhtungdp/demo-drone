@@ -4,7 +4,7 @@ const { getQueryFromKey } = require('components/create-query-community')
 const userAgent = require('useragent')
 const testService = require('components/test-service-community')
 const pagination = require('@bit/tungtung.micro.components.micro-crud/micro-crud/pagination')
-const { testStatus } = require('../../constants')
+const { testStatus, templateTestList } = require('../../constants')
 const boom = require('boom')
 const error = require('../../error')
 
@@ -57,40 +57,26 @@ module.exports = {
   },
   getTestList: pagination(async req => {
     const query = { status: { $in: [testStatus.NEW, testStatus.OLD] } }
-    const options = {
-      sort: { createdAt: -1 },
-      ...req.pagination
-    }
-    let testList = await Test.paginate(query, options)
-    return testList
+    return templateTestList(req, query)
   }),
+
   getTestListByPlayed: pagination(async req => {
     const query = {
       'usersPlayed._id': req.user._id,
       status: { $in: [testStatus.NEW, testStatus.OLD] }
     }
-    const options = {
-      sort: { createdAt: -1 },
-      ...req.pagination
-    }
-    let testList = await Test.paginate(query, options)
-    return testList
+    return templateTestList(req, query)
   }),
   getTestListByPlaying: pagination(async req => {
     let testId = await AccessLog.distinct('test._id', {
       'owner._id': req.user._id
     })
-    const options = {
-      sort: { createdAt: -1 },
-      ...req.pagination
-    }
     let query = {
       'usersPlayed._id': { $nin: [req.user._id] },
       totalQuestions: { $gt: 0 },
       _id: { $in: testId }
     }
-    let testList = await Test.paginate(query, options)
-    return testList
+    return templateTestList(req, query)
   }),
   bookmarkTest: async req => {
     const query = getQueryFromKey(req.params.testKey)

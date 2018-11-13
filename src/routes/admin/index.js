@@ -4,7 +4,7 @@ const { json } = require('micro')
 const validation = require('@bit/tungtung.micro.components.micro-joi')
 const { getQueryFromKey } = require('components/create-query-community')
 const pagination = require('@bit/tungtung.micro.components.micro-crud/micro-crud/pagination')
-const { testStatus } = require('../../constants')
+const { testStatus, templateTestList } = require('../../constants')
 const axios = require('axios')
 const amqp = require('amqp')
 
@@ -149,34 +149,19 @@ module.exports = {
         { status: { $nin: [testStatus.DRAFT] } }
       ]
     }
-    const options = {
-      sort: { createdAt: -1 },
-      ...req.pagination
-    }
-    let testList = await Test.paginate(query, options)
-    return testList
+    return templateTestList(req, query)
   }),
   getTestListByDraft: pagination(async req => {
     const query = {
       $and: [{ 'owner._id': req.user._id }, { status: testStatus.DRAFT }]
     }
-    const options = {
-      sort: { createdAt: -1 },
-      ...req.pagination
-    }
-    let testList = await Test.paginate(query, options)
-    return testList
+    return templateTestList(req, query)
   }),
   getTestBookmark: pagination(async req => {
-    const options = {
-      sort: { createdAt: -1 },
-      ...req.pagination
-    }
     let query = {
       'bookmarker._id': req.user._id
     }
-    let testList = await Test.paginate(query, options)
-    return testList
+    return templateTestList(req, query)
   }),
   deleteTest: async req => {
     let query = {
