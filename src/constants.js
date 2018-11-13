@@ -39,12 +39,61 @@ const templateTestList = async (req, query) => {
         step: 1,
         createdAt: 1,
         updatedAt: 1,
-        isBookmarked: { $in: [req.user.id, '$bookmarker'] },
-        isManagers: { $in: [req.user.id, '$managers'] },
-        isEditors: { $in: [req.user.id, '$editors'] },
-        isViewers: { $in: [req.user.id, '$viewers'] },
-        isBuyers: { $in: [req.user.id, '$buyers'] },
-        isSubmited: { $in: [req.user.id, '$usersPlayed'] }
+        bookmarkerIds: {
+          $map: { input: '$bookmarker', as: 'bmk', in: '$$bmk._id' }
+        },
+        managerIds: {
+          $map: { input: '$managers', as: 'bmk', in: '$$bmk._id' }
+        },
+        editorIds: {
+          $map: { input: '$editors', as: 'bmk', in: '$$bmk._id' }
+        },
+        viewerIds: {
+          $map: { input: '$viewers', as: 'bmk', in: '$$bmk._id' }
+        },
+        buyerIds: {
+          $map: { input: '$buyers', as: 'bmk', in: '$$bmk._id' }
+        },
+        sumbitedIds: {
+          $map: { input: '$usersPlayed', as: 'bmk', in: '$$bmk._id' }
+        }
+      }
+    },
+    {
+      $project: {
+        title: 1,
+        slug: 1,
+        time: 1,
+        accessCount: 1,
+        description: String,
+        tags: 1,
+        mode: 1,
+        isCustomRank: 1,
+        customRank: 1,
+        type: 1,
+        openingTime: 1,
+        closingTime: 1,
+        showResultTime: 1,
+        password: 1,
+        status: String,
+        pdfFile: String,
+        totalQuestions: 1,
+        owner: 1,
+        accessibility: 1,
+        totalRatings: 1,
+        ratingAvg: 1,
+        searchField: 1,
+        price: 1,
+        isFree: 1,
+        step: 1,
+        createdAt: 1,
+        updatedAt: 1,
+        isBookmarked: { $in: [req.user._id, '$bookmarkerIds'] },
+        isManagers: { $in: [req.user._id, '$managerIds'] },
+        isEditors: { $in: [req.user._id, '$editorIds'] },
+        isViewers: { $in: [req.user._id, '$viewerIds'] },
+        isBuyers: { $in: [req.user._id, '$buyerIds'] },
+        isSubmited: { $in: [req.user._id, '$sumbitedIds'] }
       }
     },
     { $limit: req.pagination.limit * req.pagination.page },
