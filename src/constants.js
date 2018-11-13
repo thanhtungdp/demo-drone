@@ -39,45 +39,94 @@ const templateTestList = async (req, query) => {
         step: 1,
         createdAt: 1,
         updatedAt: 1,
-        isBookmarked: { $cond:
-          {
-            if: { $isArray: "$bookmarker"  },
-            then: { $in: [req.user._id, '$bookmarker'] },
+        bookmarkerIds: {
+          $map: { input: '$bookmarker', as: 'bmk', in: '$$bmk._id' }
+        },
+        managerIds: {
+          $map: { input: '$managers', as: 'bmk', in: '$$bmk._id' }
+        },
+        editorIds: {
+          $map: { input: '$editors', as: 'bmk', in: '$$bmk._id' }
+        },
+        viewerIds: {
+          $map: { input: '$viewers', as: 'bmk', in: '$$bmk._id' }
+        },
+        buyerIds: {
+          $map: { input: '$buyers', as: 'bmk', in: '$$bmk._id' }
+        },
+        sumbitedIds: {
+          $map: { input: '$usersPlayed', as: 'bmk', in: '$$bmk._id' }
+        }
+      }
+    },
+    {
+      $project: {
+        title: 1,
+        slug: 1,
+        time: 1,
+        accessCount: 1,
+        description: String,
+        tags: 1,
+        mode: 1,
+        isCustomRank: 1,
+        customRank: 1,
+        type: 1,
+        openingTime: 1,
+        closingTime: 1,
+        showResultTime: 1,
+        password: 1,
+        status: String,
+        pdfFile: String,
+        totalQuestions: 1,
+        owner: 1,
+        accessibility: 1,
+        totalRatings: 1,
+        ratingAvg: 1,
+        searchField: 1,
+        price: 1,
+        isFree: 1,
+        step: 1,
+        createdAt: 1,
+        updatedAt: 1,
+        isBookmarked: {
+          $cond: {
+            if: { $isArray: '$bookmarkerIds' },
+            then: { $in: [req.user._id, '$bookmarkerIds'] },
             else: false
           }
         },
-        isManagers: { $cond:
-          {
-            if: { $isArray: "$managers"  },
-            then: { $in: [req.user._id, '$managers'] },
+        isManagers: {
+          $cond: {
+            if: { $isArray: '$managerIds' },
+            then: { $in: [req.user._id, '$managerIds'] },
             else: false
           }
         },
-        isEditors: { $cond:
-          {
-            if: { $isArray: "$editors"  },
-            then: { $in: [req.user._id, '$editors'] },
+        isEditors: {
+          $cond: {
+            if: { $isArray: '$editorIds' },
+            then: { $in: [req.user._id, '$editorIds'] },
             else: false
           }
         },
-        isViewers: { $cond:
-          {
-            if: { $isArray: "$viewers"  },
-            then: { $in: [req.user._id, '$viewers'] },
+        isViewers: {
+          $cond: {
+            if: { $isArray: '$viewerIds' },
+            then: { $in: [req.user._id, '$viewerIds'] },
             else: false
           }
         },
-        isBuyers: { $cond:
-          {
-            if: { $isArray: "$buyers"  },
-            then: { $in: [req.user._id, '$buyers'] },
+        isBuyers: {
+          $cond: {
+            if: { $isArray: '$buyerIds' },
+            then: { $in: [req.user._id, '$buyerIds'] },
             else: false
           }
         },
-        isSubmited: { $cond:
-          {
-            if: { $isArray: "$usersPlayed"  },
-            then: { $in: [req.user._id, '$usersPlayed'] },
+        isSubmited: {
+          $cond: {
+            if: { $isArray: '$sumbitedIds' },
+            then: { $in: [req.user._id, '$sumbitedIds'] },
             else: false
           }
         }
