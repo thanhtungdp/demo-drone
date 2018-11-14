@@ -132,9 +132,9 @@ const templateTestList = async (req, query) => {
         }
       }
     },
+    { $sort: { createdAt: -1 } },
     { $limit: req.pagination.limit * req.pagination.page },
-    { $skip: (req.pagination.page - 1) * req.pagination.limit },
-    { $sort: { createdAt: -1 } }
+    { $skip: (req.pagination.page - 1) * req.pagination.limit }
   ])
   let total = await Test.count(query)
   let pages = await Math.ceil(total / req.pagination.limit)
