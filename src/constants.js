@@ -16,7 +16,7 @@ const templateTestList = async (req, query) => {
         slug: 1,
         time: 1,
         accessCount: 1,
-        description: String,
+        description: 1,
         tags: 1,
         mode: 1,
         isCustomRank: 1,
@@ -26,8 +26,8 @@ const templateTestList = async (req, query) => {
         closingTime: 1,
         showResultTime: 1,
         password: 1,
-        status: String,
-        pdfFile: String,
+        status: 1,
+        pdfFile: 1,
         totalQuestions: 1,
         owner: 1,
         accessibility: 1,
@@ -54,7 +54,7 @@ const templateTestList = async (req, query) => {
         buyerIds: {
           $map: { input: '$buyers', as: 'bmk', in: '$$bmk._id' }
         },
-        sumbitedIds: {
+        submittedIds: {
           $map: { input: '$usersPlayed', as: 'bmk', in: '$$bmk._id' }
         }
       }
@@ -65,7 +65,7 @@ const templateTestList = async (req, query) => {
         slug: 1,
         time: 1,
         accessCount: 1,
-        description: String,
+        description: 1,
         tags: 1,
         mode: 1,
         isCustomRank: 1,
@@ -75,8 +75,8 @@ const templateTestList = async (req, query) => {
         closingTime: 1,
         showResultTime: 1,
         password: 1,
-        status: String,
-        pdfFile: String,
+        status: 1,
+        pdfFile: 1,
         totalQuestions: 1,
         owner: 1,
         accessibility: 1,
@@ -125,8 +125,8 @@ const templateTestList = async (req, query) => {
         },
         isSubmited: {
           $cond: {
-            if: { $isArray: '$sumbitedIds' },
-            then: { $in: [req.user._id, '$sumbitedIds'] },
+            if: { $isArray: '$submittedIds' },
+            then: { $in: [req.user._id, '$submittedIds'] },
             else: false
           }
         }
