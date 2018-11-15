@@ -7,6 +7,10 @@ const testStatus = {
   REJECTED: 'REJECTED',
   NEED_REVIEW: 'NEED_REVIEW'
 }
+const testMode = {
+  PUBLIC: 'PUBLIC',
+  PRIVATE: 'PRIVATE'
+}
 const templateTestList = async (req, query) => {
   let testList = await Test.aggregate([
     { $match: query },
@@ -143,5 +147,6 @@ const templateTestList = async (req, query) => {
 
 module.exports = {
   templateTestList: templateTestList,
-  testStatus: testStatus
+  testStatus: testStatus,
+  testMode: testMode
 }

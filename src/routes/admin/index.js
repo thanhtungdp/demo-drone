@@ -4,7 +4,7 @@ const { json } = require('micro')
 const validation = require('@bit/tungtung.micro.components.micro-joi')
 const { getQueryFromKey } = require('components/create-query-community')
 const pagination = require('@bit/tungtung.micro.components.micro-crud/micro-crud/pagination')
-const { testStatus, templateTestList } = require('../../constants')
+const { testStatus, templateTestList, testMode } = require('../../constants')
 const axios = require('axios')
 const amqp = require('amqp')
 
@@ -85,7 +85,7 @@ module.exports = {
       query,
       {
         ...body,
-        status: testStatus.NEED_REVIEW,
+        status: testStatus.DRAFT,
         step: 4
       },
       req.user
@@ -107,16 +107,26 @@ module.exports = {
   }),
   submitForReview: async req => {
     // Gửi đề thi cho admin duyệt
+    // Change testMode to PUBLIC, then change testStatus to NEED_REVIEW
     const query = getQueryFromKey(req.params.testKey)
     const updatedTest = await Test.update(
       query,
       {
+        mode: testMode.PUBLIC,
         status: testStatus.NEED_REVIEW,
         step: 4
       },
       req.user
     )
     return updatedTest
+      ? {
+        success: true,
+        status: updatedTest.status,
+        mode: updatedTest.mode
+      }
+      : {
+        success: false
+      }
   },
   getTestForUpdate: async req => {
     const query = getQueryFromKey(req.params.testKey)
