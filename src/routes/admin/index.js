@@ -52,7 +52,8 @@ module.exports = {
   updateTestInfo: createTestOrUpdateTestInfo,
   updateQuestions: validation(
     Joi.object({
-      questions: Joi.array().required()
+      questions: Joi.array().required(),
+      pdfFile: Joi.string()
     })
   )(async req => {
     const body = await json(req)
@@ -61,6 +62,7 @@ module.exports = {
       query,
       {
         questions: body.questions,
+        pdfFile: body.pdfFile,
         totalQuestions: body.questions.length,
         status: testStatus.DRAFT,
         step: 3
@@ -148,7 +150,8 @@ module.exports = {
       password: 1,
       price: 1,
       step: 1,
-      status: 1
+      status: 1,
+      pdfFile: 1
     })
     return test
   },
