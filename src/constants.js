@@ -43,6 +43,7 @@ const templateTestList = async (req, query) => {
         step: 1,
         createdAt: 1,
         updatedAt: 1,
+        featuredImage: 1,
         bookmarkerIds: {
           $map: { input: '$bookmarker', as: 'bmk', in: '$$bmk._id' }
         },
@@ -92,6 +93,7 @@ const templateTestList = async (req, query) => {
         step: 1,
         createdAt: 1,
         updatedAt: 1,
+        featuredImage: 1,
         isBookmarked: {
           $cond: {
             if: { $isArray: '$bookmarkerIds' },

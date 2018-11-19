@@ -1,26 +1,37 @@
 const { Schema } = require('mongoose')
 const { createModelSimple } = require('@bit/tungtung.micro.components.mongo')
 const { slug } = require('@bit/tungtung.micro.components.mongo-slug')
+const { testStatus } = require('../constants')
 
 const TestSchema = new Schema({
   title: String,
   slug: String,
   time: Number,
+  featuredImage: String,
   accessCount: {
     type: Number,
     default: 0
   },
   description: String,
   tags: [{}],
-  mode: String, // PUBLIC or PRIVATE
-  isCustomRank: Boolean, // true or false
+  mode: {
+    type: String,
+    default: 'PUBLIC'
+  }, // PUBLIC or PRIVATE
+  isCustomRank: {
+    type: Boolean,
+    default: false
+  }, // true or false
   customRank: [{}],
-  type: String, // ONLINE or OFFLINE
+  type: {
+    type: String,
+    default: 'OFFLINE'
+  }, // ONLINE or OFFLINE
   openingTime: Date,
   closingTime: Date,
   showResultTime: Date,
   password: String, // password access test
-  status: String,
+  status: String, // NEW - OLD - NEED_REVIEW - REJECTED
   pdfFile: String,
   totalQuestions: {
     type: Number,
@@ -45,7 +56,10 @@ const TestSchema = new Schema({
     default: 0
   },
   searchField: String,
-  price: Number,
+  price: {
+    type: Number,
+    default: 0
+  },
   isFree: Boolean,
   step: {
     type: Number,
@@ -79,19 +93,23 @@ module.exports = createModelSimple(
   },
   {
     create: function (data, owner) {
-      const quizlist = new this({
+      const test = new this({
         ...data,
         slug: slug(data.title, true),
         searchField: slug(data.title, false, ' ').toLowerCase(),
         owner: owner,
+        status: testStatus.DRAFT,
         step: 2
       })
-      return quizlist.save()
+      return test.save()
     },
-    update: function (query = {}, data, owner) {
+    update: function (query = {}, data) {
       let fields = {}
       if (data.title) {
         fields.searchField = slug(data.title, false, ' ').toLowerCase()
+      }
+      if (!data.status) {
+        fields.status = testStatus.DRAFT
       }
       return this.findOneAndUpdate(
         query,
@@ -99,7 +117,7 @@ module.exports = createModelSimple(
           $set: {
             ...data,
             ...fields,
-            owner: owner
+            updatedAt: new Date()
           }
         },
         { new: true }

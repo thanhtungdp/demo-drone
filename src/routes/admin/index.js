@@ -13,10 +13,7 @@ const createTestOrUpdateTestInfo = validation(
     title: Joi.string().required(),
     description: Joi.string().required(),
     time: Joi.number().required(),
-    tags: Joi.array(),
-    mode: Joi.string().required(),
-    isCustomRank: Joi.boolean().required(),
-    customRank: Joi.array()
+    tags: Joi.array()
   })
 )(async req => {
   const body = await json(req)
@@ -24,15 +21,10 @@ const createTestOrUpdateTestInfo = validation(
   if (req.params.testKey) {
     // Update
     const query = getQueryFromKey(req.params.testKey)
-    test = await Test.update(
-      query,
-      {
-        ...body,
-        step: 2,
-        status: testStatus.DRAFT
-      },
-      req.user
-    )
+    test = await Test.update(query, {
+      ...body,
+      step: 2
+    })
   } else {
     // Create
     test = await Test.create(body, req.user)
@@ -64,7 +56,6 @@ module.exports = {
         questions: body.questions,
         pdfFile: body.pdfFile,
         totalQuestions: body.questions.length,
-        status: testStatus.DRAFT,
         step: 3
       },
       req.user
@@ -78,7 +69,11 @@ module.exports = {
       closingTime: Joi.date(),
       showResultTime: Joi.date(),
       password: Joi.string(),
-      price: Joi.number().required()
+      price: Joi.number().required(),
+      isCustomRank: Joi.boolean().required(),
+      customRank: Joi.array(),
+      mode: Joi.string().required(),
+      featuredImage: Joi.string()
     })
   )(async req => {
     const body = await json(req)
@@ -87,7 +82,6 @@ module.exports = {
       query,
       {
         ...body,
-        status: testStatus.DRAFT,
         step: 4
       },
       req.user
@@ -151,7 +145,8 @@ module.exports = {
       price: 1,
       step: 1,
       status: 1,
-      pdfFile: 1
+      pdfFile: 1,
+      featuredImage: 1
     })
     return test
   },
