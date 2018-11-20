@@ -4,7 +4,8 @@ const { json } = require('micro')
 const validation = require('@bit/tungtung.micro.components.micro-joi')
 const { getQueryFromKey } = require('components/create-query-community')
 const pagination = require('@bit/tungtung.micro.components.micro-crud/micro-crud/pagination')
-const { testStatus, templateTestList, testMode } = require('../../constants')
+const { testStatus, testMode } = require('../../constants')
+const templateTestList = require('../../template')
 const axios = require('axios')
 const amqp = require('amqp')
 
@@ -25,6 +26,7 @@ const createTestOrUpdateTestInfo = validation(
       ...body,
       step: 2
     })
+    amqp.publish('TEST_UPDATE', test)
   } else {
     // Create
     test = await Test.create(body, req.user)
