@@ -128,28 +128,7 @@ module.exports = {
   },
   getTestForUpdate: async req => {
     const query = getQueryFromKey(req.params.testKey)
-    let test = await Test.findOne(query).select({
-      _id: 1,
-      title: 1,
-      slug: 1,
-      description: 1,
-      time: 1,
-      tags: 1,
-      mode: 1,
-      isCustomRank: 1,
-      customRank: 1,
-      questions: 1,
-      type: 1,
-      openingTime: 1,
-      closingTime: 1,
-      showResultTime: 1,
-      password: 1,
-      price: 1,
-      step: 1,
-      status: 1,
-      pdfFile: 1,
-      featuredImage: 1
-    })
+    let test = await Test.findOne(query)
     return test
   },
   getTestListByCreated: pagination(async req => {
