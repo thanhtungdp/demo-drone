@@ -62,10 +62,8 @@ module.exports = {
   }),
 
   getTestListByPlayed: pagination(async req => {
-    const query = {
-      'usersPlayed._id': req.user._id,
-      status: { $in: [testStatus.NEW, testStatus.OLD] }
-    }
+    const query = { 'usersPlayed._id': req.user._id }
+
     return templateTestList(req, query)
   }),
   getTestListByPlaying: pagination(async req => {
