@@ -59,9 +59,13 @@ module.exports = routerConbine(
   get('/health', () => 'Working...'),
   post('/', composeMiddle(internalRoute.getTestList)),
   get('/access-log/:accessLogId', composeMiddle(internalRoute.getAccessLog)),
+  get(
+    '/:testKey/:questionKey/comment',
+    composeMiddle(internalRoute.updateInfoComment)
+  ),
   get('/:testKey/access-count', composeMiddle(internalRoute.updateAccessCount)),
   get('/:testKey/submited', composeMiddle(internalRoute.updatePlayerSubmited)),
   get('/:testKey', composeMiddle(internalRoute.getTestItem)),
-  put('/:testKey/rating', composeMiddle(internalRoute.updateRating)),
+  put('/:testKey/rating', composeMiddle(internalRoute.updateInfoRating)),
   get('/*', () => config.serviceName)
 )

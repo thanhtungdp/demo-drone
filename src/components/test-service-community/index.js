@@ -89,6 +89,24 @@ async function getTestListFromTestListKey (service, req, data) {
   }
 }
 
+async function updateInfoComment (service, req, testKey, questionKey) {
+  try {
+    const dataRes = await axios.get(
+      service + '/' + testKey + '/' + questionKey + '/comment',
+      {
+        headers: {
+          common: {
+            ...req.headers
+          }
+        }
+      }
+    )
+    return dataRes.data
+  } catch (e) {
+    throw e
+  }
+}
+
 module.exports = (service = process.env.TEST_SERVICE) => {
   return {
     findTest: (req, testKey) => findTest(service, req, testKey),
@@ -100,6 +118,8 @@ module.exports = (service = process.env.TEST_SERVICE) => {
     updateRating: (req, testKey, data) =>
       updateRating(service, req, testKey, data),
     getTestListFromTestListKey: (req, data) =>
-      getTestListFromTestListKey(service, req, data)
+      getTestListFromTestListKey(service, req, data),
+    updateInfoComment: (req, testKey, questionKey) =>
+      updateInfoComment(service, req, testKey, questionKey)
   }
 }

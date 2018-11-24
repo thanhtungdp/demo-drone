@@ -22,7 +22,7 @@ const createTestOrUpdateTestInfo = validation(
   if (req.params.testKey) {
     // Update
     const query = getQueryFromKey(req.params.testKey)
-    test = await Test.update(query, {
+    test = await Test.updateTest(query, {
       ...body,
       step: 2
     })
@@ -52,7 +52,7 @@ module.exports = {
   )(async req => {
     const body = await json(req)
     const query = getQueryFromKey(req.params.testKey)
-    const updatedTest = await Test.update(
+    const updatedTest = await Test.updateTest(
       query,
       {
         questions: body.questions,
@@ -80,7 +80,7 @@ module.exports = {
   )(async req => {
     const body = await json(req)
     const query = getQueryFromKey(req.params.testKey)
-    const updatedTest = await Test.update(
+    const updatedTest = await Test.updateTest(
       query,
       {
         ...body,
@@ -107,7 +107,7 @@ module.exports = {
     // Gửi đề thi cho admin duyệt
     // Change testMode to PUBLIC, then change testStatus to NEED_REVIEW
     const query = getQueryFromKey(req.params.testKey)
-    const updatedTest = await Test.update(
+    const updatedTest = await Test.updateTest(
       query,
       {
         mode: testMode.PUBLIC,

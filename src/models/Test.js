@@ -79,7 +79,7 @@ TestSchema.methods.updateAccessCount = function () {
   this.accessCount = this.accessCount + 1
   return this.save()
 }
-TestSchema.methods.updateRating = function (data = {}) {
+TestSchema.methods.updateRatingInfo = function (data = {}) {
   this.ratingAvg =
     (this.totalRatings * this.ratingAvg + data.rating) / (this.totalRatings + 1)
   this.totalRatings = this.totalRatings + 1
@@ -103,7 +103,7 @@ module.exports = createModelSimple(
       })
       return test.save()
     },
-    update: function (query = {}, data) {
+    updateTest: function (query = {}, data) {
       let fields = {}
       if (data.title) {
         fields.searchField = slug(data.title, false, ' ').toLowerCase()

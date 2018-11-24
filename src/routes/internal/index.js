@@ -58,14 +58,30 @@ module.exports = {
     const test = await Test.savedUserSubmit(query, req.user)
     return test
   },
-  updateRating: async req => {
+  updateInfoRating: async req => {
     let body = await json(req)
     const query = getQueryFromKey(req.params.testKey)
     let test = await Test.findOne(query)
     let data = {
       rating: body.rating
     }
-    let rating = await test.updateRating(data)
+    let rating = await test.updateInfoRating(data)
     return rating
+  },
+  updateInfoComment: async req => {
+    let query = {
+      $and: [
+        { 'questions._id': req.params.questionKey },
+        getQueryFromKey(req.params.testKey)
+      ]
+    }
+    const comment = await Test.findOneAndUpdate(
+      query,
+      {
+        $inc: { 'questions.$.totalComment': 1 }
+      },
+      { new: true }
+    )
+    return comment
   }
 }
