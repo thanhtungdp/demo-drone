@@ -39,7 +39,9 @@ const TestSchema = new Schema({
   },
   category: {},
   questions: [{}],
-  owner: {},
+  owner: {
+    _id: {type: Schema.ObjectId}
+  },
   managers: [{}],
   editors: [{}],
   viewers: [{}],
