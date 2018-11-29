@@ -40,7 +40,11 @@ const TestSchema = new Schema({
   category: {},
   questions: [{}],
   owner: {
-    _id: {type: Schema.ObjectId}
+    _id: {type: Schema.ObjectId},
+    username: {type: String},
+    email: {type: String},
+    avatar: {},
+    fullname: {type: String}
   },
   managers: [{}],
   editors: [{}],
