@@ -40,19 +40,67 @@ const TestSchema = new Schema({
   category: {},
   questions: [{}],
   owner: {
-    _id: {type: Schema.ObjectId},
-    username: {type: String},
-    email: {type: String},
+    _id: { type: Schema.ObjectId },
+    username: { type: String },
+    email: { type: String },
     avatar: {},
-    fullname: {type: String}
+    fullname: { type: String }
   },
-  managers: [{}],
-  editors: [{}],
-  viewers: [{}],
-  buyers: [{}],
-  bookmarker: [{}],
+  managers: [
+    {
+      _id: { type: Schema.ObjectId },
+      username: { type: String },
+      email: { type: String },
+      avatar: {},
+      fullname: { type: String }
+    }
+  ],
+  editors: [
+    {
+      _id: { type: Schema.ObjectId },
+      username: { type: String },
+      email: { type: String },
+      avatar: {},
+      fullname: { type: String }
+    }
+  ],
+  viewers: [
+    {
+      _id: { type: Schema.ObjectId },
+      username: { type: String },
+      email: { type: String },
+      avatar: {},
+      fullname: { type: String }
+    }
+  ],
+  buyers: [
+    {
+      _id: { type: Schema.ObjectId },
+      username: { type: String },
+      email: { type: String },
+      avatar: {},
+      fullname: { type: String }
+    }
+  ],
+  bookmarker: [
+    {
+      _id: { type: Schema.ObjectId },
+      username: { type: String },
+      email: { type: String },
+      avatar: {},
+      fullname: { type: String }
+    }
+  ],
   accessibility: String,
-  usersPlayed: [{}],
+  usersPlayed: [
+    {
+      _id: { type: Schema.ObjectId },
+      username: { type: String },
+      email: { type: String },
+      avatar: {},
+      fullname: { type: String }
+    }
+  ],
   totalRatings: {
     type: Number,
     default: 0
