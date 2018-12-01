@@ -1,3 +1,4 @@
+const mongoose = require('mongoose')
 const Test = require('models/Test')
 
 const templateTestList = async (req, query) => {
@@ -18,57 +19,6 @@ const templateTestList = async (req, query) => {
         openingTime: 1,
         closingTime: 1,
         showResultTime: 1,
-        password: 1,
-        status: 1,
-        pdfFile: 1,
-        totalQuestions: 1,
-        owner: 1,
-        accessibility: 1,
-        totalRatings: 1,
-        ratingAvg: 1,
-        searchField: 1,
-        price: 1,
-        isFree: 1,
-        step: 1,
-        createdAt: 1,
-        updatedAt: 1,
-        featuredImage: 1,
-        bookmarkerIds: {
-          $map: { input: '$bookmarker', as: 'bmk', in: '$$bmk._id' }
-        },
-        managerIds: {
-          $map: { input: '$managers', as: 'bmk', in: '$$bmk._id' }
-        },
-        editorIds: {
-          $map: { input: '$editors', as: 'bmk', in: '$$bmk._id' }
-        },
-        viewerIds: {
-          $map: { input: '$viewers', as: 'bmk', in: '$$bmk._id' }
-        },
-        buyerIds: {
-          $map: { input: '$buyers', as: 'bmk', in: '$$bmk._id' }
-        },
-        submittedIds: {
-          $map: { input: '$usersPlayed', as: 'bmk', in: '$$bmk._id' }
-        }
-      }
-    },
-    {
-      $project: {
-        title: 1,
-        slug: 1,
-        time: 1,
-        accessCount: 1,
-        description: 1,
-        tags: 1,
-        mode: 1,
-        isCustomRank: 1,
-        customRank: 1,
-        type: 1,
-        openingTime: 1,
-        closingTime: 1,
-        showResultTime: 1,
-        password: 1,
         status: 1,
         pdfFile: 1,
         totalQuestions: 1,
@@ -85,43 +35,47 @@ const templateTestList = async (req, query) => {
         featuredImage: 1,
         isBookmarked: {
           $cond: {
-            if: { $isArray: '$bookmarkerIds' },
-            then: { $in: [req.user._id, '$bookmarkerIds'] },
+            if: { $isArray: '$bookmarker' },
+            then: {
+              $in: [mongoose.Types.ObjectId(req.user._id), '$bookmarker']
+            },
             else: false
           }
         },
         isManagers: {
           $cond: {
-            if: { $isArray: '$managerIds' },
-            then: { $in: [req.user._id, '$managerIds'] },
+            if: { $isArray: '$managers' },
+            then: { $in: [mongoose.Types.ObjectId(req.user._id), '$managers'] },
             else: false
           }
         },
         isEditors: {
           $cond: {
-            if: { $isArray: '$editorIds' },
-            then: { $in: [req.user._id, '$editorIds'] },
+            if: { $isArray: '$editors' },
+            then: { $in: [mongoose.Types.ObjectId(req.user._id), '$editors'] },
             else: false
           }
         },
         isViewers: {
           $cond: {
-            if: { $isArray: '$viewerIds' },
-            then: { $in: [req.user._id, '$viewerIds'] },
+            if: { $isArray: '$viewers' },
+            then: { $in: [mongoose.Types.ObjectId(req.user._id), '$viewers'] },
             else: false
           }
         },
         isBuyers: {
           $cond: {
-            if: { $isArray: '$buyerIds' },
-            then: { $in: [req.user._id, '$buyerIds'] },
+            if: { $isArray: '$buyers' },
+            then: { $in: [mongoose.Types.ObjectId(req.user._id), '$buyers'] },
             else: false
           }
         },
         isSubmited: {
           $cond: {
-            if: { $isArray: '$submittedIds' },
-            then: { $in: [req.user._id, '$submittedIds'] },
+            if: { $isArray: '$usersPlayed' },
+            then: {
+              $in: [mongoose.Types.ObjectId(req.user._id), '$usersPlayed']
+            },
             else: false
           }
         }

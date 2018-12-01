@@ -2,8 +2,17 @@ const { Schema } = require('mongoose')
 const { createModelSimple } = require('@bit/tungtung.micro.components.mongo')
 
 const AccessLogSchema = new Schema({
-  owner: {},
-  test: {},
+  owner: {
+    _id: { type: Schema.ObjectId },
+    username: { type: String },
+    email: { type: String },
+    avatar: {},
+    fullname: { type: String }
+  },
+  test: {
+    _id: { type: Schema.ObjectId },
+    slug: { type: String }
+  },
   ip: String,
   browser: String,
   data: {

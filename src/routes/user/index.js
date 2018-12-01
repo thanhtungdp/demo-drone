@@ -71,7 +71,7 @@ module.exports = {
     let testId = await AccessLog.distinct('test._id', {
       'owner._id': req.user._id
     })
-    testId = testId.map(id => mongoose.Types.ObjectId(id)
+    testId = testId.map(id => mongoose.Types.ObjectId(id))
     let query = {
       'usersPlayed._id': { $ne: mongoose.Types.ObjectId(req.user._id) },
       totalQuestions: { $gt: 0 },
