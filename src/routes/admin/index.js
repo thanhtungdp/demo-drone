@@ -1,3 +1,4 @@
+const mongoose = require('mongoose')
 const Joi = require('joi')
 const Test = require('models/Test')
 const { json } = require('micro')
@@ -105,7 +106,7 @@ module.exports = {
   }),
   submitForReview: async req => {
     // Gửi đề thi cho admin duyệt
-    // Change testMode to PUBLIC, then change testStatus to NEED_REVIEW
+     // Change testMode to PUBLIC, then change testStatus to NEED_REVIEW
     const query = getQueryFromKey(req.params.testKey)
     const updatedTest = await Test.updateTest(
       query,
@@ -134,21 +135,19 @@ module.exports = {
   getTestListByCreated: pagination(async req => {
     const query = {
       $and: [
-        { 'owner._id': req.user._id },
+        { 'owner._id': mongoose.Types.ObjectId(req.user._id) },
         { status: { $nin: [testStatus.DRAFT] } }
       ]
     }
     return templateTestList(req, query)
   }),
   getTestListByDraft: pagination(async req => {
-    const query = {
-      $and: [{ 'owner._id': req.user._id }, { status: testStatus.DRAFT }]
-    }
+    const query = { 'owner._id': mongoose.Types.ObjectId(req.user._id), status: testStatus.DRAFT }
     return templateTestList(req, query)
   }),
   getTestBookmark: pagination(async req => {
     let query = {
-      'bookmarker._id': req.user._id
+      'bookmarker._id': mongoose.Types.ObjectId(req.user._id)
     }
     return templateTestList(req, query)
   }),

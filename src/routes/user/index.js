@@ -1,3 +1,4 @@
+const mongoose = require('mongoose')
 const AccessLog = require('models/AccessLog')
 const Test = require('models/Test')
 const { getQueryFromKey } = require('components/create-query-community')
@@ -62,7 +63,7 @@ module.exports = {
   }),
 
   getTestListByPlayed: pagination(async req => {
-    const query = { 'usersPlayed._id': req.user._id }
+    const query = { 'usersPlayed._id': mongoose.Types.ObjectId(req.user._id) }
 
     return templateTestList(req, query)
   }),
