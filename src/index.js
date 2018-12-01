@@ -9,9 +9,11 @@ connectSimple(config.mongodbUrl)
 const playerRoute = require('routes/user')
 const adminRoute = require('routes/admin')
 const internalRoute = require('routes/internal')
+const incognitoRoute = require('routes/incognito')
 
 const adminNamespace = withNamespace(`/${config.serviceName}/admin`)
 const userNamespace = withNamespace(`/${config.serviceName}/user`)
+const incognitoNamespace = withNamespace(`/${config.serviceName}/incognito`)
 
 const authMiddleware = createMiddlewareAuth()
 
@@ -56,6 +58,7 @@ module.exports = routerConbine(
     get('/:testKey', composeMiddle(playerRoute.getTestDetail)),
     get('/', composeMiddle(playerRoute.getTestList))
   ),
+  incognitoNamespace(get('/hot', handleErrors(incognitoRoute.getTestListHot))),
   get('/health', () => 'Working...'),
   post('/', composeMiddle(internalRoute.getTestList)),
   get('/access-log/:accessLogId', composeMiddle(internalRoute.getAccessLog)),
