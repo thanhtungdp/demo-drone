@@ -40,7 +40,8 @@ module.exports = routerConbine(
     get('/created', composeMiddle(adminRoute.getTestListByCreated)),
     get('/draft', composeMiddle(adminRoute.getTestListByDraft)),
     get('/bookmarked', composeMiddle(adminRoute.getTestBookmark)),
-    get('/update/:testKey', composeMiddle(adminRoute.getTestForUpdate))
+    get('/update/:testKey', composeMiddle(adminRoute.getTestForUpdate)),
+    get('/test-info', composeMiddle(adminRoute.getTestInfo))
   ),
   userNamespace(
     get('/played', composeMiddle(playerRoute.getTestListByPlayed)),
