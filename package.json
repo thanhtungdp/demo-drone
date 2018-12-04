@@ -28,6 +28,7 @@
     "boom": "^7.2.0",
     "chalk": "^2.4.1",
     "dotenv": "^6.0.0",
+    "exceljs": "^0.6.2",
     "faker": "^4.1.0",
     "joi": "^13.4.0",
     "micro": "latest",
