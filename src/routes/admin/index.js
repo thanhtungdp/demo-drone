@@ -172,7 +172,7 @@ module.exports = {
     let sheet = workbook.addWorksheet('Tests')
     let fileName = `report.xlsx`
     sheet.columns = [
-      { header: 'id', key: 'name', width: 25 },
+      { header: 'id', key: 'id', width: 25 },
       { header: 'Tên', key: 'title', width: 20 },
       { header: 'Slug', key: 'slug', width: 20 },
       { header: 'Mô tả', key: 'description', width: 30 },
