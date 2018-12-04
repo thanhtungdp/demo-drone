@@ -37,7 +37,7 @@ const templateTestList = async (req, query) => {
           $cond: {
             if: { $isArray: '$bookmarker' },
             then: {
-              $in: [mongoose.Types.ObjectId(req.user._id), '$bookmarker']
+              $in: [mongoose.Types.ObjectId(req.user._id), '$bookmarker._id']
             },
             else: false
           }
@@ -45,28 +45,28 @@ const templateTestList = async (req, query) => {
         isManagers: {
           $cond: {
             if: { $isArray: '$managers' },
-            then: { $in: [mongoose.Types.ObjectId(req.user._id), '$managers'] },
+            then: { $in: [mongoose.Types.ObjectId(req.user._id), '$managers._id'] },
             else: false
           }
         },
         isEditors: {
           $cond: {
             if: { $isArray: '$editors' },
-            then: { $in: [mongoose.Types.ObjectId(req.user._id), '$editors'] },
+            then: { $in: [mongoose.Types.ObjectId(req.user._id), '$editors._id'] },
             else: false
           }
         },
         isViewers: {
           $cond: {
             if: { $isArray: '$viewers' },
-            then: { $in: [mongoose.Types.ObjectId(req.user._id), '$viewers'] },
+            then: { $in: [mongoose.Types.ObjectId(req.user._id), '$viewers._id'] },
             else: false
           }
         },
         isBuyers: {
           $cond: {
             if: { $isArray: '$buyers' },
-            then: { $in: [mongoose.Types.ObjectId(req.user._id), '$buyers'] },
+            then: { $in: [mongoose.Types.ObjectId(req.user._id), '$buyers._id'] },
             else: false
           }
         },
@@ -74,7 +74,7 @@ const templateTestList = async (req, query) => {
           $cond: {
             if: { $isArray: '$usersPlayed' },
             then: {
-              $in: [mongoose.Types.ObjectId(req.user._id), '$usersPlayed']
+              $in: [mongoose.Types.ObjectId(req.user._id), '$usersPlayed._id']
             },
             else: false
           }
