@@ -76,7 +76,6 @@ module.exports = {
       status: { $in: [testStatus.NEW, testStatus.OLD] }
     }
     let testList = await templateTestList(req, query)
-    return testList
     if (testList.total === 0) {
       query = {
         status: { $in: [testStatus.NEW, testStatus.OLD] }
