@@ -69,11 +69,14 @@ module.exports = {
     })
     let query
     query = {
-      'owner._id': { $in: [user.following] },
-      'tags._id': { $in: [user.followedTags] },
+      $or: [
+        { 'owner._id': { $in: [user.following] } },
+        { 'tags._id': { $in: [user.followedTags] } }
+      ],
       status: { $in: [testStatus.NEW, testStatus.OLD] }
     }
     let testList = await templateTestList(req, query)
+    return testList
     if (testList.total === 0) {
       query = {
         status: { $in: [testStatus.NEW, testStatus.OLD] }
