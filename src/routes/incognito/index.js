@@ -7,12 +7,8 @@ module.exports = {
   getTestListHot: pagination(async req => {
     let query = {}
     let options = {
-      select: {
-        questions: 0
-      },
-      sort: {
-        createdAt: -1
-      },
+      select: { questions: 0 },
+      sort: { createdAt: -1 },
       ...req.pagination
     }
     let testList = await Test.paginate(query, options)
@@ -25,6 +21,12 @@ module.exports = {
         { status: { $in: [testStatus.NEW, testStatus.OLD] } }
       ]
     }
-    return Test.paginate(query)
+    let options = {
+      select: { questions: 0 },
+      sort: { createdAt: -1 },
+      ...req.pagination
+    }
+    let testList = await Test.paginate(query, options)
+    return testList
   })
 }
