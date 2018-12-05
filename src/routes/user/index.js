@@ -1,6 +1,7 @@
 const mongoose = require('mongoose')
 const AccessLog = require('models/AccessLog')
 const Test = require('models/Test')
+const User = require('models/User')
 const { getQueryFromKey } = require('components/create-query-community')
 const userAgent = require('useragent')
 const testService = require('components/test-service-community')
@@ -62,9 +63,28 @@ module.exports = {
     return templateTestList(req, query)
   }),
 
+  getTestListByFollowed: pagination(async req => {
+    let user = await User.findOne({
+      _id: mongoose.Types.ObjectId(req.user._id)
+    })
+    let query
+    query = {
+      'owner._id': { $in: [user.following] },
+      'tags._id': { $in: [user.followedTags] },
+      status: { $in: [testStatus.NEW, testStatus.OLD] }
+    }
+    let testList = await templateTestList(req, query)
+    if (testList.total === 0) {
+      query = {
+        status: { $in: [testStatus.NEW, testStatus.OLD] }
+      }
+      testList = await templateTestList(req, query)
+    }
+    return testList
+  }),
+
   getTestListByPlayed: pagination(async req => {
     const query = { 'usersPlayed._id': mongoose.Types.ObjectId(req.user._id) }
-
     return templateTestList(req, query)
   }),
   getTestListByPlaying: pagination(async req => {
