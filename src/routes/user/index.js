@@ -2,7 +2,10 @@ const mongoose = require('mongoose')
 const AccessLog = require('models/AccessLog')
 const Test = require('models/Test')
 const User = require('models/User')
-const { getQueryFromKey } = require('components/create-query-community')
+const {
+  getQueryFromKey,
+  getQueryFromTagKey
+} = require('components/create-query-community')
 const userAgent = require('useragent')
 const testService = require('components/test-service-community')
 const pagination = require('@bit/tungtung.micro.components.micro-crud/micro-crud/pagination')
@@ -84,7 +87,15 @@ module.exports = {
     }
     return testList
   }),
-
+  getTestListByTag: pagination(async req => {
+    let query = {
+      $and: [
+        getQueryFromTagKey(req.params.tagKey),
+        { status: { $in: [testStatus.NEW, testStatus.OLD] } }
+      ]
+    }
+    return templateTestList(req, query)
+  }),
   getTestListByPlayed: pagination(async req => {
     const query = { 'usersPlayed._id': mongoose.Types.ObjectId(req.user._id) }
     return templateTestList(req, query)

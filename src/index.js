@@ -48,6 +48,7 @@ module.exports = routerConbine(
     get('/played', composeMiddle(playerRoute.getTestListByPlayed)),
     get('/playing', composeMiddle(playerRoute.getTestListByPlaying)),
     get('/bookmarked', composeMiddle(playerRoute.getTestCheckBookmark)),
+    get('/:tagKey/tag', composeMiddle(playerRoute.getTestListByTag)),
     get('/:testKey/bookmark', composeMiddle(playerRoute.bookmarkTest)),
     get('/:testKey/un-bookmark', composeMiddle(playerRoute.unBookmarkTest)),
     get(
@@ -60,7 +61,10 @@ module.exports = routerConbine(
     get('/:testKey', composeMiddle(playerRoute.getTestDetail)),
     get('/', composeMiddle(playerRoute.getTestList))
   ),
-  incognitoNamespace(get('/hot', handleErrors(incognitoRoute.getTestListHot))),
+  incognitoNamespace(
+    get('/hot', handleErrors(incognitoRoute.getTestListHot)),
+    get('/:tagKey/tag', handleErrors(incognitoRoute.getTestListByTag))
+  ),
   get('/health', () => 'Working...'),
   post('/', composeMiddle(internalRoute.getTestList)),
   get('/access-log/:accessLogId', composeMiddle(internalRoute.getAccessLog)),
