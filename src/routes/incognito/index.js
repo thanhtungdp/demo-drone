@@ -1,11 +1,18 @@
+const mongoose = require('mongoose')
 const Test = require('models/Test')
 const pagination = require('@bit/tungtung.micro.components.micro-crud/micro-crud/pagination')
 const { testStatus } = require('../../constants')
 const { getQueryFromTagKey } = require('components/create-query-community')
+const testService = require('components/test-service-community')
 
 module.exports = {
   getTestListHot: pagination(async req => {
-    let query = {}
+    let data = await testService().getTestListHot(req)
+    data = data.map(data => mongoose.Types.ObjectId(data._id.testId))
+    let query = {
+      _id: { $in: data },
+      status: { $in: [testStatus.NEW, testStatus.OLD] }
+    }
     let options = {
       select: { questions: 0 },
       sort: { createdAt: -1 },

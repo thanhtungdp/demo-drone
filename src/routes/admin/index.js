@@ -191,10 +191,10 @@ module.exports = {
         title: test.title,
         slug: test.slug,
         description: test.description
-      });
+      })
     })
 
-    await workbook.xlsx.writeFile(fileName);
-    return {file: fileName};
+    await workbook.xlsx.writeFile(fileName)
+    return {file: fileName}
   }
 }
