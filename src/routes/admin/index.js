@@ -9,6 +9,7 @@ const { testStatus, testMode } = require('../../constants')
 const templateTestList = require('../../template')
 const axios = require('axios')
 const amqp = require('amqp')
+const Excel = require('exceljs')
 
 const createTestOrUpdateTestInfo = validation(
   Joi.object({
@@ -142,7 +143,10 @@ module.exports = {
     return templateTestList(req, query)
   }),
   getTestListByDraft: pagination(async req => {
-    const query = { 'owner._id': mongoose.Types.ObjectId(req.user._id), status: testStatus.DRAFT }
+    const query = {
+      'owner._id': mongoose.Types.ObjectId(req.user._id),
+      status: testStatus.DRAFT
+    }
     return templateTestList(req, query)
   }),
   getTestBookmark: pagination(async req => {
@@ -153,12 +157,44 @@ module.exports = {
   }),
   deleteTest: async req => {
     let query = {
-      $and: [
-        getQueryFromKey(req.params.testKey),
-        { 'owner._id': req.user._id }
-      ]
+      $and: [getQueryFromKey(req.params.testKey), { 'owner._id': req.user._id }]
     }
     let test = await Test.remove(query)
     return test
+  },
+  getTestInfo: async req => {
+    let workbook = new Excel.Workbook()
+    workbook.creator = 'Tung Tung'
+    workbook.lastModifiedBy = 'Tung Tung'
+    workbook.created = new Date()
+    workbook.modified = new Date()
+    workbook.lastPrinted = new Date()
+    let sheet = workbook.addWorksheet('Tests')
+    let fileName = `report.xlsx`
+    sheet.columns = [
+      { header: 'id', key: 'id', width: 25 },
+      { header: 'Tên', key: 'title', width: 20 },
+      { header: 'Slug', key: 'slug', width: 20 },
+      { header: 'Mô tả', key: 'description', width: 30 },
+      { header: 'Tag ID', key: 'score', width: 10, outlineLevel: 1 }
+    ]
+
+    let tests = await Test.find(
+      { tags: { $size: 0 }, status: { $in: ['NEW', 'OLD'] } },
+      { _id: 1, title: 1, slug: 1, description: 1 }
+    ).limit(500)
+
+    tests.map((test, index) => {
+      // Add a couple of Rows by key-value, after the last current row, using the column keys
+      sheet.addRow({
+        id: test._id,
+        title: test.title,
+        slug: test.slug,
+        description: test.description
+      })
+    })
+
+    await workbook.xlsx.writeFile(fileName)
+    return { file: fileName }
   }
 }

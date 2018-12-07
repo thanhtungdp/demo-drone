@@ -38,7 +38,7 @@ const templateTestList = async (req, query) => {
           $cond: {
             if: { $isArray: '$bookmarker' },
             then: {
-              $in: [userId, '$bookmarker']
+              $in: [userId, '$bookmarker._id']
             },
             else: false
           }
@@ -46,28 +46,28 @@ const templateTestList = async (req, query) => {
         isManagers: {
           $cond: {
             if: { $isArray: '$managers' },
-            then: { $in: [userId, '$managers'] },
+            then: { $in: [userId, '$managers._id'] },
             else: false
           }
         },
         isEditors: {
           $cond: {
             if: { $isArray: '$editors' },
-            then: { $in: [userId, '$editors'] },
+            then: { $in: [userId, '$editors._id'] },
             else: false
           }
         },
         isViewers: {
           $cond: {
             if: { $isArray: '$viewers' },
-            then: { $in: [userId, '$viewers'] },
+            then: { $in: [userId, '$viewers._id'] },
             else: false
           }
         },
         isBuyers: {
           $cond: {
             if: { $isArray: '$buyers' },
-            then: { $in: [userId, '$buyers'] },
+            then: { $in: [userId, '$buyers._d'] },
             else: false
           }
         },
@@ -75,7 +75,7 @@ const templateTestList = async (req, query) => {
           $cond: {
             if: { $isArray: '$usersPlayed' },
             then: {
-              $in: [userId, '$usersPlayed']
+              $in: [userId, '$usersPlayed._id']
             },
             else: false
           }

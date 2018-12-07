@@ -6,7 +6,17 @@ function isObjectId (idString) {
 
 function getQueryFromKey (key) {
   return key
-    ? isObjectId(key) ? { $or: [{ _id: key }, { slug: key }] } : { slug: key }
+    ? isObjectId(key)
+      ? { $or: [{ _id: key }, { slug: key }] }
+      : { slug: key }
+    : {}
+}
+
+function getQueryFromTagKey (key) {
+  return key
+    ? isObjectId(key)
+      ? { $or: [{ 'tags._id': key }, { 'tags.slug': key }] }
+      : { 'tags.slug': key }
     : {}
 }
 
@@ -34,9 +44,11 @@ function getQueryUser (key) {
 module.exports.getQueryFromKey = getQueryFromKey
 module.exports.getQueryTestFromKey = getQueryTestFromKey
 module.exports.getQueryUser = getQueryUser
+module.exports.getQueryFromTagKey = getQueryFromTagKey
 
 module.exports = {
   getQueryFromKey,
   getQueryTestFromKey,
-  getQueryUser
+  getQueryUser,
+  getQueryFromTagKey
 }

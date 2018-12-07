@@ -107,6 +107,22 @@ async function updateInfoComment (service, req, testKey, questionKey) {
   }
 }
 
+async function getTestListHot (service, req) {
+  console.log(service)
+  try {
+    const dataRes = await axios.get(service + '/hot', {
+      headers: {
+        common: {
+          ...req.headers
+        }
+      }
+    })
+    return dataRes.data
+  } catch (e) {
+    throw e
+  }
+}
+
 module.exports = (service = process.env.TEST_SERVICE) => {
   return {
     findTest: (req, testKey) => findTest(service, req, testKey),
@@ -120,6 +136,8 @@ module.exports = (service = process.env.TEST_SERVICE) => {
     getTestListFromTestListKey: (req, data) =>
       getTestListFromTestListKey(service, req, data),
     updateInfoComment: (req, testKey, questionKey) =>
-      updateInfoComment(service, req, testKey, questionKey)
+      updateInfoComment(service, req, testKey, questionKey),
+    getTestListHot: req =>
+      getTestListHot((service = process.env.MANAGE_TEST_SERVICE), req)
   }
 }

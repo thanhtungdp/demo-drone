@@ -13,7 +13,13 @@ const TestSchema = new Schema({
     default: 0
   },
   description: String,
-  tags: [{}],
+  tags: [
+    {
+      _id: { type: Schema.ObjectId },
+      name: String,
+      slug: String
+    }
+  ],
   mode: {
     type: String,
     default: 'PUBLIC'
