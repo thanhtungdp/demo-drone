@@ -5,6 +5,7 @@ const testStatus = {
   REJECTED: 'REJECTED',
   NEED_REVIEW: 'NEED_REVIEW'
 }
+
 const testMode = {
   PUBLIC: 'PUBLIC',
   PRIVATE: 'PRIVATE'

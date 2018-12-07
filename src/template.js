@@ -2,6 +2,7 @@ const mongoose = require('mongoose')
 const Test = require('models/Test')
 
 const templateTestList = async (req, query) => {
+  const userId = req.user ? mongoose.Types.ObjectId(req.user._id) : ''
   let testList = await Test.aggregate([
     { $match: query },
     {
@@ -37,7 +38,7 @@ const templateTestList = async (req, query) => {
           $cond: {
             if: { $isArray: '$bookmarker' },
             then: {
-              $in: [mongoose.Types.ObjectId(req.user._id), '$bookmarker']
+              $in: [userId, '$bookmarker']
             },
             else: false
           }
@@ -45,28 +46,28 @@ const templateTestList = async (req, query) => {
         isManagers: {
           $cond: {
             if: { $isArray: '$managers' },
-            then: { $in: [mongoose.Types.ObjectId(req.user._id), '$managers'] },
+            then: { $in: [userId, '$managers'] },
             else: false
           }
         },
         isEditors: {
           $cond: {
             if: { $isArray: '$editors' },
-            then: { $in: [mongoose.Types.ObjectId(req.user._id), '$editors'] },
+            then: { $in: [userId, '$editors'] },
             else: false
           }
         },
         isViewers: {
           $cond: {
             if: { $isArray: '$viewers' },
-            then: { $in: [mongoose.Types.ObjectId(req.user._id), '$viewers'] },
+            then: { $in: [userId, '$viewers'] },
             else: false
           }
         },
         isBuyers: {
           $cond: {
             if: { $isArray: '$buyers' },
-            then: { $in: [mongoose.Types.ObjectId(req.user._id), '$buyers'] },
+            then: { $in: [userId, '$buyers'] },
             else: false
           }
         },
@@ -74,7 +75,7 @@ const templateTestList = async (req, query) => {
           $cond: {
             if: { $isArray: '$usersPlayed' },
             then: {
-              $in: [mongoose.Types.ObjectId(req.user._id), '$usersPlayed']
+              $in: [userId, '$usersPlayed']
             },
             else: false
           }

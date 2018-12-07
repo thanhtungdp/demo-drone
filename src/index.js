@@ -10,9 +10,12 @@ const playerRoute = require('routes/user')
 const adminRoute = require('routes/admin')
 const internalRoute = require('routes/internal')
 const incognitoRoute = require('routes/incognito')
+const publicRoute = require('routes/public')
 
 const adminNamespace = withNamespace(`/${config.serviceName}/admin`)
 const userNamespace = withNamespace(`/${config.serviceName}/user`)
+const publicNamespace = withNamespace(`/${config.serviceName}/public`)
+
 const incognitoNamespace = withNamespace(`/${config.serviceName}/incognito`)
 
 const authMiddleware = createMiddlewareAuth()
@@ -57,6 +60,13 @@ module.exports = routerConbine(
     get('/:testKey/play', composeMiddle(playerRoute.getTestPlay)),
     get('/:testKey', composeMiddle(playerRoute.getTestDetail)),
     get('/', composeMiddle(playerRoute.getTestList))
+  ),
+  publicNamespace(
+    get(
+      '/user/:username/played',
+      handleErrors(publicRoute.getTestListByUserPlayed)
+    ),
+    get('/user/:username', handleErrors(publicRoute.getTestListByUser))
   ),
   incognitoNamespace(get('/hot', handleErrors(incognitoRoute.getTestListHot))),
   get('/health', () => 'Working...'),

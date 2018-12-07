@@ -106,7 +106,7 @@ module.exports = {
   }),
   submitForReview: async req => {
     // Gửi đề thi cho admin duyệt
-     // Change testMode to PUBLIC, then change testStatus to NEED_REVIEW
+    // Change testMode to PUBLIC, then change testStatus to NEED_REVIEW
     const query = getQueryFromKey(req.params.testKey)
     const updatedTest = await Test.updateTest(
       query,
