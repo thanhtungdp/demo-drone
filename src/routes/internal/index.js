@@ -2,7 +2,6 @@ const Test = require('models/Test')
 const AccessLog = require('models/AccessLog')
 const { json } = require('micro')
 const { getQueryFromKey } = require('components/create-query-community')
-const mongoose = require('mongoose')
 
 module.exports = {
   getTestItem: async req => {
@@ -72,7 +71,7 @@ module.exports = {
   updateInfoComment: async req => {
     let query = {
       $and: [
-        { 'questions._id': mongoose.Types.ObjectId(req.params.questionKey) },
+        { 'questions._id': req.params.questionKey },
         getQueryFromKey(req.params.testKey)
       ]
     }
