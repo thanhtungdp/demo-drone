@@ -32,10 +32,7 @@ module.exports = routerConbine(
     // Update test form
     put('/:testKey/test-form', composeMiddle(adminRoute.updateTestForm)),
     // Submit for review
-    put(
-      '/:testKey/submit-for-review',
-      composeMiddle(adminRoute.submitForReview)
-    ),
+    put('/:testKey/submit-for-review', composeMiddle(adminRoute.submitForReview)),
     del('/:testKey', composeMiddle(adminRoute.deleteTest)),
     get('/created', composeMiddle(adminRoute.getTestListByCreated)),
     get('/draft', composeMiddle(adminRoute.getTestListByDraft)),
@@ -50,10 +47,7 @@ module.exports = routerConbine(
     get('/bookmarked', composeMiddle(playerRoute.getTestCheckBookmark)),
     get('/:testKey/bookmark', composeMiddle(playerRoute.bookmarkTest)),
     get('/:testKey/un-bookmark', composeMiddle(playerRoute.unBookmarkTest)),
-    get(
-      '/:testKey/check-bookmarked',
-      composeMiddle(playerRoute.checkBookmarked)
-    ),
+    get('/:testKey/check-bookmarked', composeMiddle(playerRoute.checkBookmarked)),
     get('/:testKey/access-log', composeMiddle(playerRoute.createAccessLog)),
     get('/:testKey/play', composeMiddle(playerRoute.getTestPlay)),
     get('/:testKey', composeMiddle(playerRoute.getTestDetail)),
@@ -61,13 +55,10 @@ module.exports = routerConbine(
   ),
   publicNamespace(
     get('/user/hot', handleErrors(publicRoute.getTestListHot)),
-    get(
-      '/user/:username/played',
-      handleErrors(publicRoute.getTestListByUserPlayed)
-    ),
+    get('/user/:username/played', handleErrors(publicRoute.getTestListByUserPlayed)),
     get('/user/:testKey/only-view', handleErrors(publicRoute.getTestOnlyView)),
-    get('/user/:username', handleErrors(publicRoute.getTestListByUser)),
-    get('/user/:tagKey/tag', handleErrors(publicRoute.getTestListByTag))
+    get('/user/:tagKey/tag', handleErrors(publicRoute.getTestListByTag)),
+    get('/user/:username', handleErrors(publicRoute.getTestListByUser))
   ),
   get('/:testKey/access-count', composeMiddle(internalRoute.updateAccessCount)),
   get('/:testKey/submited', composeMiddle(internalRoute.updatePlayerSubmited)),
