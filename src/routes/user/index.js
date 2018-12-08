@@ -70,11 +70,13 @@ module.exports = {
     let user = await User.findOne({
       _id: mongoose.Types.ObjectId(req.user._id)
     })
+    let followingIds = user.following.map((following) => following._id)
+    let followedTagIds = user.followedTags.map((tag) => tag._id)
     let query
     query = {
       $or: [
-        { 'owner._id': { $in: [user.following] } },
-        { 'tags._id': { $in: [user.followedTags] } }
+        { 'owner._id': { $in: followingIds } },
+        { 'tags._id': { $in: followedTagIds } }
       ],
       status: { $in: [testStatus.NEW, testStatus.OLD] }
     }

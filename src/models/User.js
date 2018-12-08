@@ -77,11 +77,23 @@ const UserSchema = new Schema({
     default: Date.now()
   },
   followers: {
-    type: [{}],
+    type: [{
+      _id: { type: Schema.ObjectId },
+      username: { type: String },
+      email: { type: String },
+      avatar: {},
+      fullname: { type: String }
+    }],
     default: []
   },
   following: {
-    type: [{}],
+    type: [{
+      _id: { type: Schema.ObjectId },
+      username: { type: String },
+      email: { type: String },
+      avatar: {},
+      fullname: { type: String }
+    }],
     default: []
   },
   fbFriendIds: {
