@@ -9,14 +9,11 @@ connectSimple(config.mongodbUrl)
 const playerRoute = require('routes/user')
 const adminRoute = require('routes/admin')
 const internalRoute = require('routes/internal')
-const incognitoRoute = require('routes/incognito')
 const publicRoute = require('routes/public')
 
 const adminNamespace = withNamespace(`/${config.serviceName}/admin`)
 const userNamespace = withNamespace(`/${config.serviceName}/user`)
 const publicNamespace = withNamespace(`/${config.serviceName}/public`)
-
-const incognitoNamespace = withNamespace(`/${config.serviceName}/incognito`)
 
 const authMiddleware = createMiddlewareAuth()
 
@@ -35,10 +32,7 @@ module.exports = routerConbine(
     // Update test form
     put('/:testKey/test-form', composeMiddle(adminRoute.updateTestForm)),
     // Submit for review
-    put(
-      '/:testKey/submit-for-review',
-      composeMiddle(adminRoute.submitForReview)
-    ),
+    put('/:testKey/submit-for-review', composeMiddle(adminRoute.submitForReview)),
     del('/:testKey', composeMiddle(adminRoute.deleteTest)),
     get('/created', composeMiddle(adminRoute.getTestListByCreated)),
     get('/draft', composeMiddle(adminRoute.getTestListByDraft)),
@@ -51,36 +45,20 @@ module.exports = routerConbine(
     get('/played', composeMiddle(playerRoute.getTestListByPlayed)),
     get('/playing', composeMiddle(playerRoute.getTestListByPlaying)),
     get('/bookmarked', composeMiddle(playerRoute.getTestCheckBookmark)),
-    get('/:tagKey/tag', composeMiddle(playerRoute.getTestListByTag)),
     get('/:testKey/bookmark', composeMiddle(playerRoute.bookmarkTest)),
     get('/:testKey/un-bookmark', composeMiddle(playerRoute.unBookmarkTest)),
-    get(
-      '/:testKey/check-bookmarked',
-      composeMiddle(playerRoute.checkBookmarked)
-    ),
+    get('/:testKey/check-bookmarked', composeMiddle(playerRoute.checkBookmarked)),
     get('/:testKey/access-log', composeMiddle(playerRoute.createAccessLog)),
-    get('/:testKey/only-view', composeMiddle(playerRoute.getTestOnlyView)),
     get('/:testKey/play', composeMiddle(playerRoute.getTestPlay)),
     get('/:testKey', composeMiddle(playerRoute.getTestDetail)),
     get('/', composeMiddle(playerRoute.getTestList))
   ),
   publicNamespace(
-    get(
-      '/user/:username/played',
-      handleErrors(publicRoute.getTestListByUserPlayed)
-    ),
+    get('/user/hot', handleErrors(publicRoute.getTestListHot)),
+    get('/user/:username/played', handleErrors(publicRoute.getTestListByUserPlayed)),
+    get('/user/:testKey/only-view', handleErrors(publicRoute.getTestOnlyView)),
+    get('/user/:tagKey/tag', handleErrors(publicRoute.getTestListByTag)),
     get('/user/:username', handleErrors(publicRoute.getTestListByUser))
-  ),
-  incognitoNamespace(
-    get('/hot', handleErrors(incognitoRoute.getTestListHot)),
-    get('/:tagKey/tag', handleErrors(incognitoRoute.getTestListByTag))
-  ),
-  get('/health', () => 'Working...'),
-  post('/', composeMiddle(internalRoute.getTestList)),
-  get('/access-log/:accessLogId', composeMiddle(internalRoute.getAccessLog)),
-  get(
-    '/:testKey/:questionKey/comment',
-    composeMiddle(internalRoute.updateInfoComment)
   ),
   get('/:testKey/access-count', composeMiddle(internalRoute.updateAccessCount)),
   get('/:testKey/submited', composeMiddle(internalRoute.updatePlayerSubmited)),

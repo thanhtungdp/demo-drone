@@ -2,17 +2,12 @@ const mongoose = require('mongoose')
 const AccessLog = require('models/AccessLog')
 const Test = require('models/Test')
 const User = require('models/User')
-const {
-  getQueryFromKey,
-  getQueryFromTagKey
-} = require('components/create-query-community')
+const { getQueryFromKey } = require('components/create-query-community')
 const userAgent = require('useragent')
 const testService = require('components/test-service-community')
 const pagination = require('@bit/tungtung.micro.components.micro-crud/micro-crud/pagination')
 const { testStatus } = require('../../constants')
 const templateTestList = require('../../template')
-const boom = require('boom')
-const error = require('../../error')
 
 module.exports = {
   createAccessLog: async req => {
@@ -26,8 +21,7 @@ module.exports = {
     var user = req.user
     var ua = userAgent.is(browser)
     const test = await testService().updateAccessCount(req, testKey)
-    ua.android =
-      browser.indexOf('Dalvik') !== -1 || browser.indexOf('Android') !== -1
+    ua.android = browser.indexOf('Dalvik') !== -1 || browser.indexOf('Android') !== -1
     ua.iOS = browser.indexOf('iPhone') !== -1
     const data = {
       ip,
@@ -44,16 +38,6 @@ module.exports = {
     const test = await Test.findOne(query)
     return test
   },
-  getTestOnlyView: async req => {
-    const query = getQueryFromKey(req.params.testKey)
-    const test = await Test.findOne(query).select({ questions: 0 })
-    if (!test) {
-      throw boom.notAcceptable(error.TEST_NOT_FOUND, {
-        name: error.TEST_NOT_FOUND
-      })
-    }
-    return test
-  },
   getTestPlay: async req => {
     const query = getQueryFromKey(req.params.testKey)
     const test = await Test.findOne(query).select({
@@ -65,7 +49,6 @@ module.exports = {
     const query = { status: { $in: [testStatus.NEW, testStatus.OLD] } }
     return templateTestList(req, query)
   }),
-
   getTestListByFollowed: pagination(async req => {
     let user = await User.findOne({
       _id: mongoose.Types.ObjectId(req.user._id)
@@ -88,15 +71,6 @@ module.exports = {
       testList = await templateTestList(req, query)
     }
     return testList
-  }),
-  getTestListByTag: pagination(async req => {
-    let query = {
-      $and: [
-        getQueryFromTagKey(req.params.tagKey),
-        { status: { $in: [testStatus.NEW, testStatus.OLD] } }
-      ]
-    }
-    return templateTestList(req, query)
   }),
   getTestListByPlayed: pagination(async req => {
     const query = { 'usersPlayed._id': mongoose.Types.ObjectId(req.user._id) }
@@ -126,10 +100,7 @@ module.exports = {
   },
   checkBookmarked: async req => {
     const query = {
-      $and: [
-        getQueryFromKey(req.params.testKey),
-        { 'bookmarker._id': req.user._id }
-      ]
+      $and: [getQueryFromKey(req.params.testKey), { 'bookmarker._id': req.user._id }]
     }
     let test = await Test.findOne(query)
     return {
