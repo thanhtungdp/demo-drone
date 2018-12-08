@@ -108,7 +108,6 @@ async function updateInfoComment (service, req, testKey, questionKey) {
 }
 
 async function getTestListHot (service, req) {
-  console.log(service)
   try {
     const dataRes = await axios.get(service + '/hot', {
       headers: {
