@@ -60,10 +60,10 @@ module.exports = routerConbine(
     get('/user/:tagKey/tag', handleErrors(publicRoute.getTestListByTag)),
     get('/user/:username', handleErrors(publicRoute.getTestListByUser))
   ),
+  get('/health', () => 'Working...'),
   get('/:testKey/access-count', composeMiddle(internalRoute.updateAccessCount)),
   get('/:testKey/submited', composeMiddle(internalRoute.updatePlayerSubmited)),
   get('/:testKey', composeMiddle(internalRoute.getTestItem)),
   put('/:testKey/rating', composeMiddle(internalRoute.updateInfoRating)),
-  get('/health', () => 'Working...'),
   get('/*', () => config.serviceName)
 )
