@@ -62,7 +62,8 @@ module.exports = routerConbine(
   ),
   get('/:testKey/access-count', composeMiddle(internalRoute.updateAccessCount)),
   get('/:testKey/submited', composeMiddle(internalRoute.updatePlayerSubmited)),
-  get('/:testKey', composeMiddle(internalRoute.getTestItem)),
+  get('/:testKey/:questionKey/comment', composeMiddle(internalRoute.updateInfoComment)),
   put('/:testKey/rating', composeMiddle(internalRoute.updateInfoRating)),
+  get('/:testKey', composeMiddle(internalRoute.getTestItem)),
   get('/*', () => config.serviceName)
 )

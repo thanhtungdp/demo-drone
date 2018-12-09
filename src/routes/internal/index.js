@@ -1,3 +1,4 @@
+const mongoose = require('mongoose')
 const Test = require('models/Test')
 const AccessLog = require('models/AccessLog')
 const { json } = require('micro')
@@ -71,7 +72,12 @@ module.exports = {
   updateInfoComment: async req => {
     let query = {
       $and: [
-        { 'questions._id': req.params.questionKey },
+        {
+          $or: [
+            { 'questions._id': req.params.questionKey },
+            { 'questions._id': mongoose.Types.ObjectId(req.params.questionKey) }
+          ]
+        },
         getQueryFromKey(req.params.testKey)
       ]
     }
