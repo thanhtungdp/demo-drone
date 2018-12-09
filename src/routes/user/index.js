@@ -55,8 +55,7 @@ module.exports = {
     })
     let followingIds = user.following.map((following) => following._id)
     let followedTagIds = user.followedTags.map((tag) => tag._id)
-    let query
-    query = {
+    let query = {
       $or: [
         { 'owner._id': { $in: followingIds } },
         { 'tags._id': { $in: followedTagIds } }

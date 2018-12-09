@@ -64,5 +64,6 @@ module.exports = routerConbine(
   get('/:testKey/submited', composeMiddle(internalRoute.updatePlayerSubmited)),
   get('/:testKey', composeMiddle(internalRoute.getTestItem)),
   put('/:testKey/rating', composeMiddle(internalRoute.updateInfoRating)),
+  get('/health', () => 'Working...'),
   get('/*', () => config.serviceName)
 )
