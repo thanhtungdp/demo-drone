@@ -72,12 +72,7 @@ module.exports = {
   updateInfoComment: async req => {
     let query = {
       $and: [
-        {
-          $or: [
-            { 'questions._id': req.params.questionKey },
-            { 'questions._id': mongoose.Types.ObjectId(req.params.questionKey) }
-          ]
-        },
+        { 'questions._id': mongoose.Types.ObjectId(req.params.questionKey) },
         getQueryFromKey(req.params.testKey)
       ]
     }
