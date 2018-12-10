@@ -1,0 +1,8 @@
+steps:
+- name: docker  
+  image: plugins/docker
+  settings:
+    repo: thanhtungdp/demo-drone
+    username: thanhtungdp
+    password: TungL0v3H4ng
+    auto_tag: true
