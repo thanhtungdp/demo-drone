@@ -1,6 +1,8 @@
 kind: pipeline
 name: default
 
+# ok
+
 steps:
 - name: docker  
   image: plugins/docker
